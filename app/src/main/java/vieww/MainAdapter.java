@@ -67,18 +67,17 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
     }
 
     public ArrayList<Integer> getCountItem() {
+        ArrayList<Integer> arrayList = new ArrayList<>();
+
         try {
             int size = 0;
             valueDay = getCalendarItem(result.get(0));
 
-            ArrayList<Integer> arrayList = new ArrayList<>();
 
             for (int i = 0; i < result.size(); i++) {
                 if (getCalendarItem(result.get(i)) == valueDay) {
                     size++;
-                }
-
-                else{
+                } else {
                     valueDay = getCalendarItem(result.get(i));
                     arrayList.add(size);
                     size = 1;
@@ -90,29 +89,58 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 //            for (int i = 0; i < arrayList.size(); i++) {
 //                Log.v("arrayI", "arrayI " + arrayList.get(i));
 //            }
-            return arrayList;
-        } finally {
+        } catch (Exception e) {
+
         }
+        return arrayList;
+
+
 
     }
 
     public int getTotalHeader(int section) {
         int start = getCalendarItem(result.get(0));
         int size = 0;
-        int total = 0;
+        int totalValue = 0;
 
         for (int i = 0; i < result.size(); i++) {
             if (getCalendarItem(result.get(i)) == start && size == section) {
-                total += result.get(i).getValue();
+                totalValue += result.get(i).getValue();
                 continue;
             }
             if (getCalendarItem(result.get(i)) != start) {
                 size++;
                 start = getCalendarItem(result.get(i));
-                if (size == section) total += result.get(i).getValue();
+                if (size == section) totalValue += result.get(i).getValue();
             }
         }
-        return total;
+        return totalValue;
+    }
+
+    public int getDayHeader(int section) {
+        int start = getCalendarItem(result.get(0));
+        int size = 0;
+        int day = 0;
+
+        for (int i = 0; i < result.size(); i++) {
+            if (getCalendarItem(result.get(i)) == start && size == section) {
+                return getCalendarItem(result.get(i));
+            } else {
+
+                start--;
+                if (getCalendarItem(result.get(i)) == start && size == section)
+                    return getCalendarItem(result.get(i));
+
+                if (getCalendarItem(result.get(i)) == start && size != section) {
+                    size++;
+                    if (size == section) return getCalendarItem(result.get(i));
+                }
+                if (getCalendarItem(result.get(i)) == start && size == section)
+                    return getCalendarItem(result.get(i));
+            }
+        }
+        return 1;
+
     }
 
 
@@ -131,7 +159,14 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
     @Override
     public void onBindHeaderViewHolder(MainVH holder, int section, boolean expanded) {
-        holder.valueHeader.setText(Integer.toString(getTotalHeader(section)));
+        try {
+            holder.valueHeader.setText(Integer.toString(getTotalHeader(section)));
+            holder.dateDayHeader.setText(Integer.toString(getDayHeader(section)));
+        } catch (Exception e) {
+
+        }
+
+
 //        int start = 100;
 //        int size = 0;
 //        int total = 0;
@@ -188,6 +223,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         TextView value;
 
         TextView valueHeader;
+        TextView dateDayHeader;
 
         public MainVH(View itemView) {
             super(itemView);
@@ -195,6 +231,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
             value = (TextView) itemView.findViewById(R.id.valueChild);
 
             valueHeader = (TextView) itemView.findViewById(R.id.totalValueOnDay);
+            dateDayHeader = (TextView) itemView.findViewById(R.id.dateText);
             // Setup view holder. You'd want some views to be optional, e.g. the
             // header/footer will have views that normal item views do or do not have.
         }

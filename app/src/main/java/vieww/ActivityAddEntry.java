@@ -62,9 +62,7 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
                             item.setPl_mn(pl_mn);
                         }
                     });
-                    RealmResults<Item> result = realm.where(Item.class).findAll();
-                    Log.v("MSG", value + " " + result.size() + " " + pl_mn);
-                    goTo();
+//                    goTo();
 
                 } else {
                     nextFragment();
