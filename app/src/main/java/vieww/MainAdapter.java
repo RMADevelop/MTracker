@@ -28,6 +28,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
     RealmResults<Item> result = mRealm.where(Item.class).findAll().sort("mDate", Sort.DESCENDING);
 
     int valueDay = 0;
+    private String[] dayWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
     ArrayList<Integer> array = getCountItem();
 
     public ArrayList<Integer> getArray() {
@@ -36,14 +37,28 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
     int counter = getCountSection(result);
 
-
-    public int getCalendarItem(Item item) {
+    public Calendar getItemCalendar(Item item) {
         Date date = item.getDate();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
+        return calendar;
+    }
+
+    public int getCalendarDayItem(Item item) {
+        Calendar calendar = getItemCalendar(item);
         int day = calendar.get(Calendar.DAY_OF_MONTH);
 
+
         return day;
+    }
+
+    public String getCalendarDayWeekItem(Item item) {
+        Calendar calendar = getItemCalendar(item);
+        int numberDayWeek = calendar.get(Calendar.DAY_OF_WEEK);
+        Log.v("dayWeek", " " + numberDayWeek);
+
+        return dayWeek[numberDayWeek-1];
+
     }
 
 
@@ -53,13 +68,13 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
         if (result.size() != 0) {
             countSection++;
-            valueDay = getCalendarItem(result.get(0));
+            valueDay = getCalendarDayItem(result.get(0));
         }
 
         for (int i = 0; i < result.size(); i++) {
-            if (getCalendarItem(result.get(i)) != valueDay) {
+            if (getCalendarDayItem(result.get(i)) != valueDay) {
                 countSection++;
-                valueDay = getCalendarItem(result.get(i));
+                valueDay = getCalendarDayItem(result.get(i));
             }
         }
         Log.v("array", " countSection " + countSection);
@@ -71,14 +86,14 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
         try {
             int size = 0;
-            valueDay = getCalendarItem(result.get(0));
+            valueDay = getCalendarDayItem(result.get(0));
 
 
             for (int i = 0; i < result.size(); i++) {
-                if (getCalendarItem(result.get(i)) == valueDay) {
+                if (getCalendarDayItem(result.get(i)) == valueDay) {
                     size++;
                 } else {
-                    valueDay = getCalendarItem(result.get(i));
+                    valueDay = getCalendarDayItem(result.get(i));
                     arrayList.add(size);
                     size = 1;
                 }
@@ -95,22 +110,21 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         return arrayList;
 
 
-
     }
 
     public int getTotalHeader(int section) {
-        int start = getCalendarItem(result.get(0));
+        int start = getCalendarDayItem(result.get(0));
         int size = 0;
         int totalValue = 0;
 
         for (int i = 0; i < result.size(); i++) {
-            if (getCalendarItem(result.get(i)) == start && size == section) {
+            if (getCalendarDayItem(result.get(i)) == start && size == section) {
                 totalValue += result.get(i).getValue();
                 continue;
             }
-            if (getCalendarItem(result.get(i)) != start) {
+            if (getCalendarDayItem(result.get(i)) != start) {
                 size++;
-                start = getCalendarItem(result.get(i));
+                start = getCalendarDayItem(result.get(i));
                 if (size == section) totalValue += result.get(i).getValue();
             }
         }
@@ -118,29 +132,54 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
     }
 
     public int getDayHeader(int section) {
-        int start = getCalendarItem(result.get(0));
+        int start = getCalendarDayItem(result.get(0));
         int size = 0;
         int day = 0;
 
         for (int i = 0; i < result.size(); i++) {
-            if (getCalendarItem(result.get(i)) == start && size == section) {
-                return getCalendarItem(result.get(i));
+            if (getCalendarDayItem(result.get(i)) == start && size == section) {
+                return getCalendarDayItem(result.get(i));
             } else {
 
                 start--;
-                if (getCalendarItem(result.get(i)) == start && size == section)
-                    return getCalendarItem(result.get(i));
+                if (getCalendarDayItem(result.get(i)) == start && size == section)
+                    return getCalendarDayItem(result.get(i));
 
-                if (getCalendarItem(result.get(i)) == start && size != section) {
+                if (getCalendarDayItem(result.get(i)) == start && size != section) {
                     size++;
-                    if (size == section) return getCalendarItem(result.get(i));
+                    if (size == section) return getCalendarDayItem(result.get(i));
                 }
-                if (getCalendarItem(result.get(i)) == start && size == section)
-                    return getCalendarItem(result.get(i));
+                if (getCalendarDayItem(result.get(i)) == start && size == section)
+                    return getCalendarDayItem(result.get(i));
             }
         }
         return 1;
+    }
 
+    public String getDayWeekHeader(int section) {
+        int start = getCalendarDayItem(result.get(0));
+        int size = 0;
+        int day = 0;
+
+        for (int i = 0; i < result.size(); i++) {
+            if (getCalendarDayItem(result.get(i)) == start && size == section) {
+                return getCalendarDayWeekItem(result.get(i));
+            } else {
+
+                start--;
+                if (getCalendarDayItem(result.get(i)) == start && size == section)
+                    return getCalendarDayWeekItem(result.get(i));
+
+                if (getCalendarDayItem(result.get(i)) == start && size != section) {
+                    size++;
+                    if (size == section) return getCalendarDayWeekItem(result.get(i));
+
+                }
+                if (getCalendarDayItem(result.get(i)) == start && size == section)
+                    return getCalendarDayWeekItem(result.get(i));
+            }
+        }
+        return null;
     }
 
 
@@ -162,6 +201,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         try {
             holder.valueHeader.setText(Integer.toString(getTotalHeader(section)));
             holder.dateDayHeader.setText(Integer.toString(getDayHeader(section)));
+            holder.dateDayWeekHeader.setText(getDayWeekHeader(section));
         } catch (Exception e) {
 
         }
@@ -175,9 +215,9 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 //            if (size == section) {
 //                total += result.get(i).getValue();
 //            }
-//            if (getCalendarItem(result.get(i)) != start) {
+//            if (getCalendarDayItem(result.get(i)) != start) {
 //                size++;
-//                start = getCalendarItem(result.get(i));
+//                start = getCalendarDayItem(result.get(i));
 //            }
 //
 //
@@ -224,6 +264,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
         TextView valueHeader;
         TextView dateDayHeader;
+        TextView dateDayWeekHeader;
 
         public MainVH(View itemView) {
             super(itemView);
@@ -232,6 +273,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
             valueHeader = (TextView) itemView.findViewById(R.id.totalValueOnDay);
             dateDayHeader = (TextView) itemView.findViewById(R.id.dateText);
+            dateDayWeekHeader = (TextView) itemView.findViewById(R.id.dayOfWeekText);
             // Setup view holder. You'd want some views to be optional, e.g. the
             // header/footer will have views that normal item views do or do not have.
         }

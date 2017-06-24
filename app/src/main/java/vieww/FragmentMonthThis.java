@@ -126,7 +126,7 @@ public class FragmentMonthThis extends Fragment {
 //            return min;
 //        }
 //
-//        public int getCalendarItem(Item item) {
+//        public int getCalendarDayItem(Item item) {
 //            Date date = item.getDate();
 //            Calendar calendar = Calendar.getInstance();
 //            calendar.setTime(date);
@@ -155,11 +155,11 @@ public class FragmentMonthThis extends Fragment {
 //                return HEADER;
 //            }
 //
-//            if (minuts == getCalendarItem(result.get(position))) {
+//            if (minuts == getCalendarDayItem(result.get(position))) {
 //                return ELEMENTS;
-//            } else if (minuts != getCalendarItem(result.get(position))) {
+//            } else if (minuts != getCalendarDayItem(result.get(position))) {
 ////                count++;
-//                minuts = getCalendarItem(result.get(position));
+//                minuts = getCalendarDayItem(result.get(position));
 //                return SECTION;
 //            }
 //            return HEADER;
