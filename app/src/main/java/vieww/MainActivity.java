@@ -1,23 +1,14 @@
 package vieww;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-
-import android.widget.TextView;
-
-import com.astuetz.PagerSlidingTabStrip;
 import com.example.roma.mtracker_v3.R;
 
 import io.realm.Realm;
@@ -25,19 +16,47 @@ import io.realm.Realm;
 public class MainActivity extends AppCompatActivity {
     FragmentManager fm;
     Fragment mFragment;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
+        setContentView(R.layout.activity_menu);
         Realm.init(this);
 
+        initToolbar();
+        initFragment();
 
 
+
+
+
+
+
+
+
+    }
+
+    private void initToolbar() {
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar.setTitle(R.string.TitleThisMonth);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                switch (item.getItemId()) {
+                    case R.id.menu_add:
+                        IntentToAdd();
+                        break;
+                }
+                return true;
+            }
+        });
+
+        toolbar.inflateMenu(R.menu.menu_main);
+
+    }
+
+    private void initFragment() {
         fm = getSupportFragmentManager();
         mFragment = fm.findFragmentById(R.id.container);
         if (mFragment == null) {
@@ -46,8 +65,6 @@ public class MainActivity extends AppCompatActivity {
                     .add(R.id.container, mFragment)
                     .commit();
         }
-
-
     }
 
 
@@ -57,15 +74,6 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_add:
-                IntentToAdd();
-                break;
-        }
-        return true;
-    }
 
     public void IntentToAdd() {
         Intent intent = new Intent(this, ActivityAddEntry.class);
