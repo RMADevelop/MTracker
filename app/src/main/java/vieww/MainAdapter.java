@@ -148,33 +148,51 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
                 if (size == section) return start;
 
 
-
             }
         }
         return 1;
     }
 
     public String getDayWeekHeader(int section) {
+
         int start = getCalendarDayItem(result.get(0));
         int size = 0;
-        int day = 0;
+        int prevDay;
+        int day = getCalendarDayItem(result.get(0));
 
         for (int i = 0; i < result.size(); i++) {
             if (getCalendarDayItem(result.get(i)) == start && size == section) {
                 return getCalendarDayWeekItem(result.get(i));
             } else {
+                prevDay = start;
+                start = getCalendarDayItem(result.get(i));
+                if (prevDay != start) size++;
+                if (size == section) return getCalendarDayWeekItem(result.get(i));
 
-                start--;
-                if (getCalendarDayItem(result.get(i)) == start && size == section)
-                    return getCalendarDayWeekItem(result.get(i));
 
-                if (getCalendarDayItem(result.get(i)) == start && size != section) {
-                    size++;
-                    if (size == section) return getCalendarDayWeekItem(result.get(i));
+//        int start = getCalendarDayItem(result.get(0));
+//        int size = 0;
+//        int day = 0;
 
-                }
-                if (getCalendarDayItem(result.get(i)) == start && size == section)
-                    return getCalendarDayWeekItem(result.get(i));
+//        for (int i = 0; i < result.size(); i++) {
+//            if (getCalendarDayItem(result.get(i)) == start && size == section) {
+//                return getCalendarDayWeekItem(result.get(i));
+//            } else {
+//
+//                start--;
+//                if (getCalendarDayItem(result.get(i)) == start && size == section)
+//                    return getCalendarDayWeekItem(result.get(i));
+//
+//                if (getCalendarDayItem(result.get(i)) == start && size != section) {
+//                    size++;
+//                    if (size == section) return getCalendarDayWeekItem(result.get(i));
+//
+//                }
+//                if (getCalendarDayItem(result.get(i)) == start && size == section)
+//                    return getCalendarDayWeekItem(result.get(i));
+//            }
+//        }
+
             }
         }
         return null;
@@ -209,7 +227,8 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
     }
 
     @Override
-    public void onBindViewHolder(MainVH holder, int section, int relativePosition, int absolutePosition) {
+    public void onBindViewHolder(MainVH holder, int section, int relativePosition,
+                                 int absolutePosition) {
         // Setup non-header view.
         // 'section' is section index.
         // 'relativePosition' is index in this section.
