@@ -62,7 +62,7 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
                             item.setPl_mn(pl_mn);
                         }
                     });
-//                    goTo();
+                    goTo();
 
                 } else {
                     nextFragment();

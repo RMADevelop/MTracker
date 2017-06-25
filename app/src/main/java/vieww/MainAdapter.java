@@ -1,5 +1,6 @@
 package vieww;
 
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,7 +58,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         int numberDayWeek = calendar.get(Calendar.DAY_OF_WEEK);
         Log.v("dayWeek", " " + numberDayWeek);
 
-        return dayWeek[numberDayWeek-1];
+        return dayWeek[numberDayWeek - 1];
 
     }
 
@@ -134,23 +135,20 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
     public int getDayHeader(int section) {
         int start = getCalendarDayItem(result.get(0));
         int size = 0;
-        int day = 0;
+        int prevDay;
+        int day = getCalendarDayItem(result.get(0));
 
         for (int i = 0; i < result.size(); i++) {
             if (getCalendarDayItem(result.get(i)) == start && size == section) {
                 return getCalendarDayItem(result.get(i));
             } else {
+                prevDay = start;
+                start = getCalendarDayItem(result.get(i));
+                if (prevDay != start) size++;
+                if (size == section) return start;
 
-                start--;
-                if (getCalendarDayItem(result.get(i)) == start && size == section)
-                    return getCalendarDayItem(result.get(i));
 
-                if (getCalendarDayItem(result.get(i)) == start && size != section) {
-                    size++;
-                    if (size == section) return getCalendarDayItem(result.get(i));
-                }
-                if (getCalendarDayItem(result.get(i)) == start && size == section)
-                    return getCalendarDayItem(result.get(i));
+
             }
         }
         return 1;
@@ -182,19 +180,16 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         return null;
     }
 
-
     @Override
     public int getSectionCount() {
-
         return counter; // number of sections, you would probably base this on a data set such as a map
     }
 
     @Override
     public int getItemCount(int sectionIndex) {
-
-
         return array.get(sectionIndex); // number of items in section, you could also pull this from a map of lists
     }
+
 
     @Override
     public void onBindHeaderViewHolder(MainVH holder, int section, boolean expanded) {
@@ -206,22 +201,6 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
         }
 
-
-//        int start = 100;
-//        int size = 0;
-//        int total = 0;
-//
-//        for (int i = 0; i < result.size(); i++) {
-//            if (size == section) {
-//                total += result.get(i).getValue();
-//            }
-//            if (getCalendarDayItem(result.get(i)) != start) {
-//                size++;
-//                start = getCalendarDayItem(result.get(i));
-//            }
-//
-//
-//        }
     }
 
     @Override
@@ -236,7 +215,6 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         // 'relativePosition' is index in this section.
         // 'absolutePosition' is index out of all items, including headers and footers.
         // See sample project for a visual of how these indices work.
-        Log.v("sectionNum", " " + section);
         holder.value.setText(Integer.toString(result.get(absolutePosition - section - 1).getValue()));
     }
 
@@ -253,9 +231,17 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
                 layoutRes = R.layout.child_recycle_item_thismonth;
                 break;
         }
+
+        Log.v("ItemView", " " + viewType);
         View v = LayoutInflater.from(parent.getContext())
                 .inflate(layoutRes, parent, false);
         return new MainVH(v);
+    }
+
+    @Override
+    public int getHeaderViewType(int section) {
+        //        if (section == 0) return 0;
+        return super.getHeaderViewType(section);
     }
 
     public static class MainVH extends SectionedViewHolder {
