@@ -8,12 +8,12 @@
             android:title="Add element"/>
         <item
             android:id="@+id/this_month"
-            android:icon="@drawable/ic_menu_gallery"
+            android:icon="@mipmap/ic_calendar_blank"
             android:title="This month"/>
         <item
-            android:id="@+id/search"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Search"/>
+            android:id="@+id/archive"
+            android:icon="@mipmap/ic_calendar_multiple"
+            android:title="Archive"/>
         <item
             android:id="@+id/settings"
             android:icon="@drawable/ic_menu_manage"

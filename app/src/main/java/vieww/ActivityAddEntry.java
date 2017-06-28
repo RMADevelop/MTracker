@@ -65,7 +65,22 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
                     goTo();
 
                 } else {
-                    nextFragment();
+//                    nextFragment();
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
+                    TextView textView = (TextView) fragment.getView().findViewById(R.id.value);
+                    String text = textView.getText().toString();
+                    final int value = Integer.parseInt(text);
+
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            Item item = realm.createObject(Item.class);
+                            item.setValue(value);
+                            item.setDate(new Date());
+                            item.setPl_mn(pl_mn);
+                        }
+                    });
+                    goTo();
                 }
             }
         });
@@ -103,7 +118,7 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
         return super.onOptionsItemSelected(item);
     }
 
-    public void goTo(){
+    public void goTo() {
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();

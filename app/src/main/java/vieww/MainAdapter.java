@@ -234,7 +234,11 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         // 'relativePosition' is index in this section.
         // 'absolutePosition' is index out of all items, including headers and footers.
         // See sample project for a visual of how these indices work.
-        holder.value.setText(Integer.toString(result.get(absolutePosition - section - 1).getValue()));
+        if (result.get(absolutePosition - section - 1).getPl_mn() == 1) {
+            holder.value.setText(Integer.toString(result.get(absolutePosition - section - 1).getValue()));
+        } else holder.value.setText("-" + Integer.toString(result.get(absolutePosition - section - 1).getValue()));
+
+
     }
 
 

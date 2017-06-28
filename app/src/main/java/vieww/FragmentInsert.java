@@ -49,6 +49,7 @@ public class FragmentInsert extends Fragment {
     private int xC;
     private int yC;
     public int pl_mn = 1;
+    private TextView minus;
     Singleton mSingleton;
 
     private int toolbarColors[];
@@ -135,6 +136,8 @@ public class FragmentInsert extends Fragment {
         n8 = (TextView) view.findViewById(R.id.n8);
         n9 = (TextView) view.findViewById(R.id.n9);
         n0 = (TextView) view.findViewById(R.id.n0);
+        minus = (TextView) view.findViewById(R.id.minus);
+        minus.setVisibility(View.INVISIBLE);
 
         value = (TextView) view.findViewById(R.id.value);
         incomeText = (TextView) view.findViewById(R.id.incomeText);
@@ -228,6 +231,7 @@ public class FragmentInsert extends Fragment {
                 circleLayout.setBackgroundColor(toolbarColors[1]);
                 updateColors(0);
                 mListener.onFragmentInteraction(1);
+                minus.setVisibility(View.INVISIBLE);
             }
         });
 
@@ -241,6 +245,7 @@ public class FragmentInsert extends Fragment {
                 circleLayout.setBackgroundColor(toolbarColors[0]);
                 updateColors(1);
                 mListener.onFragmentInteraction(0);
+                minus.setVisibility(View.VISIBLE);
 
             }
         });
