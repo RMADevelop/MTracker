@@ -1,27 +1,22 @@
-package vieww;
+package com.example.roma.mtracker_v3.vieww;
 
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
-import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
 import com.example.roma.mtracker_v3.R;
 
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.Sort;
-import model.Item;
+
+import com.example.roma.mtracker_v3.model.Item;
 
 
 public class FragmentMonthThis extends Fragment {

@@ -6,7 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import vieww.FragmentInsertDescription;
+import com.example.roma.mtracker_v3.vieww.FragmentInsertDescription;
 
 /**
  * Created by Roma on 28.05.2017.

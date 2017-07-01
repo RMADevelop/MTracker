@@ -1,4 +1,4 @@
-package vieww;
+package com.example.roma.mtracker_v3.vieww;
 
 import android.animation.Animator;
 import android.content.Context;
@@ -21,8 +21,8 @@ import com.example.roma.mtracker_v3.R;
 
 import java.util.Date;
 
-import model.Item;
-import model.Singleton;
+import com.example.roma.mtracker_v3.model.Item;
+import com.example.roma.mtracker_v3.model.Singleton;
 import io.codetail.widget.RevealLinearLayout;
 
 

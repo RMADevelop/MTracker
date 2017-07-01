@@ -1,6 +1,5 @@
-package vieww;
+package com.example.roma.mtracker_v3.vieww;
 
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +17,7 @@ import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
-import model.Item;
+import com.example.roma.mtracker_v3.model.Item;
 
 /**
  * Created by Roma on 17.06.2017.

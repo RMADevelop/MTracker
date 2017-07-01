@@ -1,13 +1,11 @@
 package com.example.roma.mtracker_v3.Adapters;
 
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import vieww.FragmentInsert;
-import vieww.FragmentInsertDescription;
-import vieww.FragmentMonthThis;
+import com.example.roma.mtracker_v3.vieww.FragmentInsertDescription;
+import com.example.roma.mtracker_v3.vieww.FragmentMonthThis;
 
 /**
  * Created by Roma on 27.06.2017.

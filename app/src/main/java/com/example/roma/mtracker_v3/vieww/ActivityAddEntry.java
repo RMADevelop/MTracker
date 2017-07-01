@@ -1,4 +1,4 @@
-package vieww;
+package com.example.roma.mtracker_v3.vieww;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,9 +16,8 @@ import com.example.roma.mtracker_v3.SingleFragmentClass;
 
 import java.util.Date;
 
-import model.Item;
+import com.example.roma.mtracker_v3.model.Item;
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 public class ActivityAddEntry extends SingleFragmentClass implements FragmentInsert.OnFragmentInteractionListener {
     private Button nextBtn;
@@ -65,7 +64,6 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
                     goTo();
 
                 } else {
-//                    nextFragment();
                     Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
                     TextView textView = (TextView) fragment.getView().findViewById(R.id.value);
                     String text = textView.getText().toString();
@@ -80,7 +78,9 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
                             item.setPl_mn(pl_mn);
                         }
                     });
-                    goTo();
+                    nextFragment();
+
+//                    goTo();
                 }
             }
         });

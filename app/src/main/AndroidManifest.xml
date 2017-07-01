@@ -10,12 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="vieww.ActivityAddEntry"
+            android:name="com.example.roma.mtracker_v3.vieww.ActivityAddEntry"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="vieww.MainActivity"
+            android:name="com.example.roma.mtracker_v3.vieww.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>

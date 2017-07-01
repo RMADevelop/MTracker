@@ -1,4 +1,4 @@
-package model;
+package com.example.roma.mtracker_v3.model;
 
 import java.util.Date;
 import java.util.UUID;
