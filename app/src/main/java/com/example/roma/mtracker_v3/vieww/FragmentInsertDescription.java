@@ -1,13 +1,16 @@
 package com.example.roma.mtracker_v3.vieww;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -25,8 +28,26 @@ public class FragmentInsertDescription extends Fragment {
     private ArrayList<Integer> imagesArray;
     private InsertDescription insertDescription;
 
+    private OnFragmentInsertDesciptionListener mListener;
+
+
+    public interface OnFragmentInsertDesciptionListener {
+        public void onFragmentInsertDescription(int idImages);
+    }
+
     public FragmentInsertDescription() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof FragmentInsert.OnFragmentInssertListener) {
+            mListener = (OnFragmentInsertDesciptionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInssertListener");
+        }
     }
 
 
@@ -47,7 +68,6 @@ public class FragmentInsertDescription extends Fragment {
     }
 
 
-
     private void initAllViews(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_insert_description);
 
@@ -56,6 +76,7 @@ public class FragmentInsertDescription extends Fragment {
 
     public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder> {
 
+
         public class ViewHolder extends RecyclerView.ViewHolder {
 
             public ImageView mImageView;
@@ -63,6 +84,13 @@ public class FragmentInsertDescription extends Fragment {
 
             public ViewHolder(View itemView) {
                 super(itemView);
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mListener.onFragmentInsertDescription(getAdapterPosition());
+                        Log.v("AdapterPosition", getAdapterPosition()+" ");
+                    }
+                });
                 mImageView = (ImageView) itemView.findViewById(R.id.description_image);
                 description = (TextView) itemView.findViewById(R.id.description_text);
             }
@@ -89,6 +117,12 @@ public class FragmentInsertDescription extends Fragment {
         public int getItemCount() {
             return insertDescription.getArrayImages().size();
         }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 }
 

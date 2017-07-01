@@ -1,9 +1,10 @@
-package com.example.roma.mtracker_v3.vieww;
+package com.example.roma.mtracker_v3.Adapters;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.afollestad.sectionedrecyclerview.SectionedRecyclerViewAdapter;
@@ -17,6 +18,8 @@ import java.util.Date;
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+
+import com.example.roma.mtracker_v3.model.InsertDescription;
 import com.example.roma.mtracker_v3.model.Item;
 
 /**
@@ -24,6 +27,14 @@ import com.example.roma.mtracker_v3.model.Item;
  */
 
 public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH> {
+
+
+    private InsertDescription arrayInsertDescription = new InsertDescription();
+    ArrayList<InsertDescription> arrayImages;
+
+
+
+
     private Realm mRealm = Realm.getDefaultInstance();
     RealmResults<Item> result = mRealm.where(Item.class).findAll().sort("mDate", Sort.DESCENDING);
 
@@ -233,9 +244,17 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
         // 'relativePosition' is index in this section.
         // 'absolutePosition' is index out of all items, including headers and footers.
         // See sample project for a visual of how these indices work.
+        arrayInsertDescription.initArrayImages();
+        int index = result.get(absolutePosition - section - 1).getIdImage();
+        arrayImages = arrayInsertDescription.getArrayImages();
+        holder.image.setImageResource(arrayImages.get(index).getImageId());
+
+
+
         if (result.get(absolutePosition - section - 1).getPl_mn() == 1) {
             holder.value.setText(Integer.toString(result.get(absolutePosition - section - 1).getValue()));
-        } else holder.value.setText("-" + Integer.toString(result.get(absolutePosition - section - 1).getValue()));
+        } else
+            holder.value.setText("-" + Integer.toString(result.get(absolutePosition - section - 1).getValue()));
 
 
     }
@@ -267,6 +286,9 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
     }
 
     public static class MainVH extends SectionedViewHolder {
+
+        ImageView image;
+
         TextView description;
         TextView value;
 
@@ -276,6 +298,7 @@ public class MainAdapter extends SectionedRecyclerViewAdapter<MainAdapter.MainVH
 
         public MainVH(View itemView) {
             super(itemView);
+            image = (ImageView) itemView.findViewById(R.id.imageDescription);
             description = (TextView) itemView.findViewById(R.id.descriptionChild);
             value = (TextView) itemView.findViewById(R.id.valueChild);
 

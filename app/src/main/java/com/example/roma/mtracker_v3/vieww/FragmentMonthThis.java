@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.roma.mtracker_v3.Adapters.MainAdapter;
 import com.example.roma.mtracker_v3.R;
 
 import java.util.ArrayList;

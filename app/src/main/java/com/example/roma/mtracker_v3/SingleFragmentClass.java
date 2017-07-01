@@ -12,6 +12,7 @@ import com.example.roma.mtracker_v3.vieww.FragmentInsertDescription;
  * Created by Roma on 28.05.2017.
  */
 
+
 public abstract class SingleFragmentClass extends AppCompatActivity {
     protected abstract Fragment createFragment();
 
@@ -34,6 +35,7 @@ public abstract class SingleFragmentClass extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         Fragment fragment = new FragmentInsertDescription();
         fragmentManager.beginTransaction().replace(R.id.fragment_host, fragment).addToBackStack(null).commit();
+
     }
 
 }

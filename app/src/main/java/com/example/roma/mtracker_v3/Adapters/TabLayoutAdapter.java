@@ -17,7 +17,7 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
     public TabLayoutAdapter(FragmentManager fm) {
         super(fm);
         tabs = new String[] {
-                "first", "MontThis", "third"
+                "MothThis", "Archive"
         };
     }
 
@@ -25,11 +25,9 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new FragmentInsertDescription();
+                return new FragmentMonthThis();
             case 1:
                 return  new FragmentMonthThis();
-            case 2:
-                return new FragmentInsertDescription();
         }
         return null;
     }
@@ -41,6 +39,6 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 3;
+        return 2;
     }
 }

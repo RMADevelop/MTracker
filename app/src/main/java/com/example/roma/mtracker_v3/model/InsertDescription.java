@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class InsertDescription {
     private Integer imageId;
     private String description;
-    private ArrayList<InsertDescription> arrayImages = new ArrayList<>();
+    private ArrayList<InsertDescription> arrayImages;
 
     public InsertDescription(){
 
@@ -23,10 +23,12 @@ public class InsertDescription {
     }
 
     public void initArrayImages() {
+        arrayImages = new ArrayList<>();
         arrayImages.add(new InsertDescription(R.mipmap.ic_food, "Food"));
         arrayImages.add(new InsertDescription(R.mipmap.ic_car, "Transport"));
         arrayImages.add(new InsertDescription(R.mipmap.ic_medic, "Medicine"));
         arrayImages.add(new InsertDescription(R.mipmap.ic_travel, "Travel"));
+        arrayImages.add(new InsertDescription(R.mipmap.ic_education, "Education"));
     }
 
     public ArrayList<InsertDescription> getArrayImages() {

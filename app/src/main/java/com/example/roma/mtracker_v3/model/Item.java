@@ -6,7 +6,6 @@ import java.util.UUID;
 import io.realm.RealmObject;
 
 
-
 public class Item extends RealmObject {
     public final static String PLMN_ROW = "pl_mn";
 
@@ -16,10 +15,22 @@ public class Item extends RealmObject {
     private int idDescription;
     private int pl_mn;
     private Date mDate;
+    private int idImage;
+
+
 
     public Item() {
         this.mUUID = UUID.randomUUID().toString();
         this.mDate = new Date();
+    }
+
+
+    public int getIdImage() {
+        return idImage;
+    }
+
+    public void setIdImage(int idImage) {
+        this.idImage = idImage;
     }
 
     public Item(String id) {

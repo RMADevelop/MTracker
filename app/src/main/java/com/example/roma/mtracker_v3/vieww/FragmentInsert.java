@@ -54,9 +54,9 @@ public class FragmentInsert extends Fragment {
 
     private int toolbarColors[];
 
-    private OnFragmentInteractionListener mListener;
+    private OnFragmentInssertListener mListener;
 
-    public interface OnFragmentInteractionListener {
+    public interface OnFragmentInssertListener {
         public void onFragmentInteraction(int i);
     }
 
@@ -75,11 +75,11 @@ public class FragmentInsert extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
+        if (context instanceof OnFragmentInssertListener) {
+            mListener = (OnFragmentInssertListener) context;
         } else {
             throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
+                    + " must implement OnFragmentInssertListener");
         }
     }
 

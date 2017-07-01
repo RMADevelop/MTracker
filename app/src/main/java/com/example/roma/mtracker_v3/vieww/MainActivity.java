@@ -55,14 +55,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showNotificationTab() {
+        viewPager.setCurrentItem(0);
+    }
+    private void showArchive() {
         viewPager.setCurrentItem(1);
     }
 
     private void initDrawerLayout() {
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toogle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
-        drawerLayout.addDrawerListener(toogle);
-        toogle.syncState();
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close);
+        drawerLayout.addDrawerListener(toggle);
+        toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
@@ -72,7 +75,12 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.this_month:
                         showNotificationTab();
+                        break;
+                    case R.id.archive:
+                        showArchive();
+                        break;
                 }
+
                 return true;
             }
         });

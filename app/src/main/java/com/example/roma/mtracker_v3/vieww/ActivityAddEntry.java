@@ -17,11 +17,15 @@ import com.example.roma.mtracker_v3.SingleFragmentClass;
 import java.util.Date;
 
 import com.example.roma.mtracker_v3.model.Item;
+
 import io.realm.Realm;
 
-public class ActivityAddEntry extends SingleFragmentClass implements FragmentInsert.OnFragmentInteractionListener {
+public class ActivityAddEntry extends SingleFragmentClass implements FragmentInsert.OnFragmentInssertListener, FragmentInsertDescription.OnFragmentInsertDesciptionListener {
     private Button nextBtn;
     private int pl_mn = 1;
+    int value = 0;
+    private boolean onInsertDescription = false;
+    private int idImages;
     Realm realm;
 //    private SectionsPagerAdapter mSectionsPagerAdapter;
 
@@ -61,27 +65,36 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
                             item.setPl_mn(pl_mn);
                         }
                     });
+
+
+                }
+
+                else if(onInsertDescription) {
+                        realm.executeTransaction(new Realm.Transaction() {
+                            @Override
+                            public void execute(Realm realm) {
+                                Item item = realm.createObject(Item.class);
+                                item.setValue(value);
+                                item.setDate(new Date());
+                                item.setPl_mn(pl_mn);
+                                item.setIdImage(idImages);
+                            }
+                        });
                     goTo();
 
-                } else {
+                }else{
                     Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
                     TextView textView = (TextView) fragment.getView().findViewById(R.id.value);
                     String text = textView.getText().toString();
-                    final int value = Integer.parseInt(text);
+                    value = Integer.parseInt(text);
+                    onInsertDescription = true;
 
-                    realm.executeTransaction(new Realm.Transaction() {
-                        @Override
-                        public void execute(Realm realm) {
-                            Item item = realm.createObject(Item.class);
-                            item.setValue(value);
-                            item.setDate(new Date());
-                            item.setPl_mn(pl_mn);
-                        }
-                    });
                     nextFragment();
+                }
 
 //                    goTo();
-                }
+
+
             }
         });
 
@@ -127,6 +140,11 @@ public class ActivityAddEntry extends SingleFragmentClass implements FragmentIns
     @Override
     public void onFragmentInteraction(int i) {
         pl_mn = i;
+    }
+
+    @Override
+    public void onFragmentInsertDescription(int idImages) {
+        this.idImages = idImages;
     }
 
 
