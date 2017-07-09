@@ -10,12 +10,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="com.example.roma.mtracker_v3.vieww.ActivityAddEntry"
+            android:name=".vieww.Activity.Activity_Add_Entry"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name="com.example.roma.mtracker_v3.vieww.MainActivity"
+            android:name=".vieww.Activity.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -28,6 +28,8 @@
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"
             android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <activity android:name=".vieww.Activity.Activity_Add_Transaction">
         </activity>
     </application>
 

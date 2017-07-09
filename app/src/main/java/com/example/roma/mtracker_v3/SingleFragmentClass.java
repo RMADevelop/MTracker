@@ -6,8 +6,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.example.roma.mtracker_v3.vieww.FragmentInsertDescription;
-
 /**
  * Created by Roma on 28.05.2017.
  */
@@ -30,10 +28,11 @@ public abstract class SingleFragmentClass extends AppCompatActivity {
                     .commit();
         }
     }
-    public void nextFragment(){
+    public void nextFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment fragment = new FragmentInsertDescription();
+//        Fragment fragment = new Month_this_insert_Description();
+
         fragmentManager.beginTransaction().replace(R.id.fragment_host, fragment).addToBackStack(null).commit();
 
     }

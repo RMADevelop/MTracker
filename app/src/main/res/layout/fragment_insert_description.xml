@@ -3,9 +3,14 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
 
-             tools:context="com.example.roma.mtracker_v3.vieww.FragmentInsertDescription">
+             tools:context="com.example.roma.mtracker_v3.vieww.Fragment.Month_this_insert_Description">
 
+<android.support.v7.widget.Toolbar
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/red">
 
+</android.support.v7.widget.Toolbar>
     <android.support.v7.widget.RecyclerView
         android:layout_gravity="center"
         android:id="@+id/recycler_insert_description"

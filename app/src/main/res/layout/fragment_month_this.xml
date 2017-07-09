@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.example.roma.mtracker_v3.vieww.FragmentMonthThis">
+             tools:context="com.example.roma.mtracker_v3.vieww.Fragment.Page_Month_This">
 
     <!-- TODO: Update blank fragment layout -->
     <android.support.v7.widget.RecyclerView

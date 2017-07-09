@@ -8,9 +8,13 @@
         android:title="@string/action_settings"
         app:showAsAction="never"/>
     <item
-        app:showAsAction="ifRoom"
         android:id="@+id/menu_add"
         android:title="Add"
-
+        app:showAsAction="always"
+        />
+    <item
+        android:id="@+id/menu_add_transaction"
+        android:title="trans"
+        app:showAsAction="always"
         />
 </menu>
