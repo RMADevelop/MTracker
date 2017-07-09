@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.example.roma.mtracker_v3.vieww.FragmentInsertDescription;
-import com.example.roma.mtracker_v3.vieww.FragmentMonthThis;
+import com.example.roma.mtracker_v3.vieww.Fragment.Page_Month_This;
+import com.example.roma.mtracker_v3.vieww.Fragment.Page_Transactions;
 
 /**
  * Created by Roma on 27.06.2017.
@@ -16,18 +16,20 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
 
     public TabLayoutAdapter(FragmentManager fm) {
         super(fm);
-        tabs = new String[] {
-                "MothThis", "Archive"
+        tabs = new String[]{
+                "Transaction", "MothThis", "Archive"
         };
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
+        switch (position) {
             case 0:
-                return new FragmentMonthThis();
+                return new Page_Transactions();
             case 1:
-                return  new FragmentMonthThis();
+                return new Page_Month_This();
+            case 2:
+                return new Page_Month_This();
         }
         return null;
     }
@@ -39,6 +41,6 @@ public class TabLayoutAdapter extends FragmentPagerAdapter {
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 }
