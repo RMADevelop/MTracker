@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tols="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                android:paddingBottom="5dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="5dp">
+
+    <ImageView
+        android:id="@+id/image_transaction"
+        style="@style/imagesInRecycler"
+        android:layout_centerVertical="true"
+        android:src="@mipmap/ic_car"
+        />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/image_transaction"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@id/image_transaction"
+        android:text="TEST"
+        android:textColor="#000"
+        />
+
+    <TextView
+        android:id="@+id/detail_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@id/image_transaction"
+        android:layout_alignStart="@id/description"
+        android:layout_marginBottom="8dp"
+        android:text="Test"
+
+        android:textSize="12sp"/>
+
+    <TextView
+        android:id="@+id/value_transaction"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignTop="@id/image_transaction"
+        android:layout_marginTop="8dp"
+        android:text="Test"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/value_transaction"
+        android:text="test"
+        android:layout_alignBottom="@id/image_transaction"
+        android:layout_marginBottom="8dp"/>
+
+</RelativeLayout>
