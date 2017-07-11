@@ -95,7 +95,7 @@ public class Transaction_Insert extends Fragment {
 
 
 
-        value = (TextView) view.findViewById(R.id.value);
+        value = (TextView) view.findViewById(R.id.value_transaction_insert);
 
 
         mAppBarLayout2 = (AppBarLayout) view.findViewById(R.id.appbar2);

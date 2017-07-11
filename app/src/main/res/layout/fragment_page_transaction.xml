@@ -5,6 +5,7 @@
              tools:context="com.example.roma.mtracker_v3.vieww.Fragment.Page_Transactions">
 
 <android.support.v7.widget.RecyclerView
+    android:id="@+id/recycler_page_transaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 

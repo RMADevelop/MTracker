@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.roma.mtracker_v3.R;
 import com.example.roma.mtracker_v3.SingleFragmentClass;
@@ -17,6 +18,7 @@ import com.example.roma.mtracker_v3.SingleFragmentClass;
 import java.util.Date;
 
 import com.example.roma.mtracker_v3.model.Item;
+import com.example.roma.mtracker_v3.model.TransactionItem;
 import com.example.roma.mtracker_v3.vieww.Fragment.Month_this_Insert;
 import com.example.roma.mtracker_v3.vieww.Fragment.Month_this_insert_Description;
 import com.example.roma.mtracker_v3.vieww.Fragment.Transaction_Insert;
@@ -32,6 +34,8 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
     public static final String FRAGMENT_ADD_VALUE = "value";
     public static final String FRAGMENT_ADD_TRANSACTION = "transaction";
 
+
+    private String valueTransaction = null;
     private Button nextBtn;
     private int pl_mn = 1;
     int value = 0;
@@ -57,8 +61,8 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
         nextBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.v("FragmentTag", ""+ getFragment().getClass());
-                if (getFragment() instanceof Month_this_Insert) {
+                Log.v("FragmentTag", "" + getFragment().getClass());
+                if (getSupportFragmentManager().findFragmentById(R.id.fragment_host) instanceof Month_this_Insert || getSupportFragmentManager().findFragmentById(R.id.fragment_host) instanceof Month_this_insert_Description) {
                     Log.v("MSG", "click");
                     if (pl_mn == 1) {
                         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
@@ -99,8 +103,32 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
 
                         nextFragment(newInstance(FRAGMENT_INSERT));
                     }
-                } else if (getFragment() instanceof Transaction) {
+                } else if (getSupportFragmentManager().findFragmentById(R.id.fragment_host) instanceof Transaction_Insert) {
 
+                    Toast.makeText(Activity_Add_Entry.this, "Click", Toast.LENGTH_SHORT).show();
+
+                    Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
+                    TextView textView = (TextView) fragment.getView().findViewById(R.id.value_transaction_insert);
+                    String text = textView.getText().toString();
+
+                    setValueTransaction(text);
+                    getSupportFragmentManager().popBackStack();
+
+
+                } else if (getSupportFragmentManager().findFragmentById(R.id.fragment_host) instanceof Transaction) {
+                    final Transaction fragment = (Transaction) getSupportFragmentManager().findFragmentById(R.id.fragment_host);
+
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            TransactionItem transactionItem = realm.createObject(TransactionItem.class);
+                            transactionItem.setValue(Integer.parseInt(fragment.getValueForRealm()));
+                            transactionItem.setDescription(fragment.getDescriptionForRealm());
+                            transactionItem.setDate(fragment.getDateForRealm());
+                            transactionItem.setIdImages(fragment.getIdImageCategory());
+                        }
+                    });
+                    goTo();
                 }
 
 
@@ -168,6 +196,13 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
         finish();
     }
 
+    public String getValueTransaction() {
+        return valueTransaction;
+    }
+
+    public void setValueTransaction(String valueTransaction) {
+        this.valueTransaction = valueTransaction;
+    }
 
     public int getIdImages() {
         return idImages;
@@ -189,11 +224,11 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
 
     @Override
     public void displayCategoryFragment() {
-        nextFragment(Month_this_insert_Description.newInstance(FRAGMENT_TRANSACTION));
+        nextFragmentWithBackStack(Month_this_insert_Description.newInstance(FRAGMENT_TRANSACTION));
     }
 
     @Override
     public void goToFragmentInsert() {
-        nextFragment(new Transaction_Insert());
+        nextFragmentWithBackStack(new Transaction_Insert());
     }
 }

@@ -224,7 +224,6 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
         // 'absolutePosition' is index out of all items, including headers and footers.
         // See sample project for a visual of how these indices work.
 
-        arrayInsertDescription.initArrayImages();
         Item element = result.get(absolutePosition - section - 1);
         arrayImages = arrayInsertDescription.getArrayImages();
 

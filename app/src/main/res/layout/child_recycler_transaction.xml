@@ -16,7 +16,7 @@
         />
 
     <TextView
-        android:id="@+id/description"
+        android:id="@+id/category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/image_transaction"
@@ -32,7 +32,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/image_transaction"
-        android:layout_alignStart="@id/description"
+        android:layout_alignStart="@id/category"
         android:layout_marginBottom="8dp"
         android:text="Test"
 

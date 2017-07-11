@@ -14,7 +14,7 @@ public class InsertDescription {
     private ArrayList<InsertDescription> arrayImages;
 
     public InsertDescription(){
-
+initArrayImages();
     }
 
     public InsertDescription(Integer imageId, String description) {

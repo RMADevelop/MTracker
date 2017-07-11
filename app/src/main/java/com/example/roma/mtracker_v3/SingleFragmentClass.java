@@ -31,10 +31,12 @@ public abstract class SingleFragmentClass extends AppCompatActivity {
     public void nextFragment(Fragment fragment){
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-//        Fragment fragment = new Month_this_insert_Description();
+        fragmentManager.beginTransaction().replace(R.id.fragment_host, fragment).commit();
+    }
+    public void nextFragmentWithBackStack(Fragment fragment){
 
+        FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.fragment_host, fragment).addToBackStack(null).commit();
-
     }
 
 }
