@@ -8,31 +8,38 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.roma.mtracker_v3.R;
+import com.example.roma.mtracker_v3.model.DateCustomChanger;
 import com.example.roma.mtracker_v3.model.InsertDescription;
 import com.example.roma.mtracker_v3.model.TransactionItem;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
+import io.realm.Sort;
 
 /**
  * Created by Roma on 10.07.2017.
  */
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.ViewHolderTransaction> {
+    private DateCustomChanger dateCustom  = new DateCustomChanger();
+
 
     private InsertDescription arrayInsertDescription = new InsertDescription();
     private ArrayList<InsertDescription> arrayImages;
 
     private Realm mRealm = Realm.getDefaultInstance();
-    RealmResults<TransactionItem> result = mRealm.where(TransactionItem.class).findAll();
+    RealmResults<TransactionItem> result = mRealm.where(TransactionItem.class).findAll().sort("date",Sort.ASCENDING);
 
     public static class ViewHolderTransaction extends RecyclerView.ViewHolder {
         public ImageView mImageView;
         public TextView category;
         public TextView description;
         public TextView valueT;
+        public TextView date;
 
         public ViewHolderTransaction(View itemView) {
             super(itemView);
@@ -40,6 +47,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             category = (TextView) itemView.findViewById(R.id.category);
             description = (TextView) itemView.findViewById(R.id.detail_description);
             valueT = (TextView) itemView.findViewById(R.id.value_transaction);
+            date = (TextView) itemView.findViewById(R.id.date_transaction);
         }
     }
 
@@ -54,14 +62,24 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolderTransaction holder, int position) {
-        arrayImages = arrayInsertDescription.getArrayImages();
+        try {
+            arrayImages = arrayInsertDescription.getArrayImages();
 
-        holder.valueT.setText(String.valueOf(result.get(position).getValue()));
-        holder.mImageView.setImageResource(arrayImages.get(result.get(position).getIdImages()).getImageId());
-        holder.description.setText(result.get(position).getDescription());
-        holder.category.setText(arrayImages.get(result.get(position).getIdImages()).getDescription());
+            dateCustom.setDate(result.get(position).getDate());
+
+            holder.valueT.setText(String.valueOf(result.get(position).getValue()));
+            holder.mImageView.setImageResource(arrayImages.get(result.get(position).getIdImages()).getImageId());
+            holder.description.setText(result.get(position).getDescription());
+            holder.category.setText(arrayImages.get(result.get(position).getIdImages()).getDescription());
+
+            holder.date.setText(dateCustom.getDay()+ " "+dateCustom.getMonth());
+        } catch (Exception e) {
+
+        }
+
+
+
     }
-
 
 
     @Override

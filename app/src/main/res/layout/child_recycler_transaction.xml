@@ -16,12 +16,13 @@
         />
 
     <TextView
+
+        android:textSize="24sp"
         android:id="@+id/category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/image_transaction"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="8dp"
         android:layout_toEndOf="@id/image_transaction"
         android:text="TEST"
         android:textColor="#000"
@@ -33,25 +34,27 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/image_transaction"
         android:layout_alignStart="@id/category"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         android:text="Test"
 
         android:textSize="12sp"/>
 
     <TextView
+        android:textSize="24sp"
         android:id="@+id/value_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignTop="@id/image_transaction"
-        android:layout_marginTop="8dp"
         android:text="Test"/>
     <TextView
+        android:id="@+id/date_transaction"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@id/value_transaction"
+        android:layout_alignEnd="@id/value_transaction"
         android:text="test"
+        android:textSize="12sp"
         android:layout_alignBottom="@id/image_transaction"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="4dp"/>
 
 </RelativeLayout>

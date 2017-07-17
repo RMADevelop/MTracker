@@ -19,13 +19,6 @@ import io.codetail.widget.RevealLinearLayout;
 
 public class Transaction_Insert extends Fragment {
 
-    private Window mWindow;
-    private Point revealCenter;
-    private AppBarLayout mAppBarLayout2;
-    private RevealLinearLayout circleLayout;
-    private Toolbar mToolbar;
-    private TextView incomeText;
-    private TextView outcomeText;
     private TextView value;
     private TextView n1;
     private TextView n2;
@@ -38,10 +31,7 @@ public class Transaction_Insert extends Fragment {
     private TextView n9;
     private TextView n0;
     private ImageView backspace;
-    private int xC;
-    private int yC;
-    public int pl_mn = 1;
-    private TextView minus;
+
 
 //    private OnFragmentInteractionListener mListener;
 
@@ -79,7 +69,6 @@ public class Transaction_Insert extends Fragment {
 
     private void initAllViews(View view) {
 
-        mWindow = getActivity().getWindow();
 
         n1 = (TextView) view.findViewById(R.id.n1);
         n2 = (TextView) view.findViewById(R.id.n2);
@@ -98,8 +87,7 @@ public class Transaction_Insert extends Fragment {
         value = (TextView) view.findViewById(R.id.value_transaction_insert);
 
 
-        mAppBarLayout2 = (AppBarLayout) view.findViewById(R.id.appbar2);
-        mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
+
 
     }
 

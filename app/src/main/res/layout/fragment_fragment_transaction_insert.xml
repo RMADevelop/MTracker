@@ -53,6 +53,7 @@
         </io.codetail.widget.RevealLinearLayout>
 
         <android.support.constraint.ConstraintLayout
+            android:background="@drawable/gradient_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBottom="@id/layer2"

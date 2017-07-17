@@ -1,15 +1,160 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context="com.example.roma.mtracker_v3.vieww.Fragment.Page_Month_This">
 
     <!-- TODO: Update blank fragment layout -->
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_month_this"
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </android.support.v7.widget.RecyclerView>
+        <android.support.design.widget.AppBarLayout
+            android:layout_width="match_parent"
+
+            android:layout_height="wrap_content">
+
+            <android.support.design.widget.CollapsingToolbarLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed"
+
+
+                >
+
+                <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                android:id="@+id/first_element_month_this"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="8dp"
+                                android:layout_marginTop="8dp"
+                                android:orientation="vertical"
+                                android:paddingLeft="16dp"
+                                android:paddingRight="16dp"
+                    >
+
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/linear_header">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Информация за: "
+                            android:textSize="16sp"
+                            />
+
+                        <Spinner
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:entries="@array/spinner_month_this">
+
+                        </Spinner>
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/white"
+                        android:layout_below="@id/linear_header"
+                        android:layout_marginTop="10dp">
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/incomeFE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Доход"
+                        android:textSize="20sp"
+                        android:layout_marginTop="20dp"
+                        android:layout_below="@+id/linear_header"
+                        android:layout_alignParentStart="true"/>
+
+                    <TextView
+                        android:id="@+id/outcomeFE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/incomeFE"
+                        android:layout_marginTop="8dp"
+                        android:text="Расход"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/incomeValueFE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@id/incomeFE"
+                        android:text="10435345"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/outcomeValueFE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignTop="@id/outcomeFE"
+                        android:text="222222"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/hr2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="1dp"
+                        android:layout_alignLeft="@+id/totalValueFE"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/outcomeValueFE"
+                        android:layout_marginTop="5dp"
+                        android:background="@color/white"/>
+
+                    <TextView
+                        android:id="@id/totalValueFE"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/hr2"
+                        android:layout_marginTop="5dp"
+                        android:paddingLeft="10dp"
+                        android:textSize="20sp"/>
+                </RelativeLayout>
+
+
+            </android.support.design.widget.CollapsingToolbarLayout>
+        </android.support.design.widget.AppBarLayout>
+
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_month_this"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </android.support.v4.widget.NestedScrollView>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_month_this"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="@dimen/fab_margin"
+            android:src="@drawable/food"/>
+        <!--app:layout_behavior="com.example.roma.mtracker_v3.Fab_Show_Fade"-->
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
 
 </FrameLayout>
+

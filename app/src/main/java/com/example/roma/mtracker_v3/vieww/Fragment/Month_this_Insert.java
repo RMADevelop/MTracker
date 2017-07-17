@@ -3,8 +3,10 @@ package com.example.roma.mtracker_v3.vieww.Fragment;
 import android.animation.Animator;
 import android.content.Context;
 import android.graphics.Point;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.ColorRes;
+import android.support.annotation.DrawableRes;
 import android.support.design.widget.AppBarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -39,6 +41,7 @@ public class Month_this_Insert extends Fragment {
     private Toolbar mToolbar;
     private TextView incomeText;
     private TextView outcomeText;
+    private TextView convertText;
     private TextView value;
     private TextView n1;
     private TextView n2;
@@ -59,11 +62,12 @@ public class Month_this_Insert extends Fragment {
     Singleton mSingleton;
 
     private int toolbarColors[];
+    private Drawable[] arrayDrawable;
 
     private OnFragmentInssertListener mListener;
 
     public interface OnFragmentInssertListener {
-         void onFragmentInteraction(int i);
+        void onFragmentInteraction(int i);
     }
 
 
@@ -71,10 +75,10 @@ public class Month_this_Insert extends Fragment {
         // Required empty public constructor
     }
 
-    public static Month_this_Insert newInstance() {
+    public static Month_this_Insert newInstance(String arg) {
         Month_this_Insert fragment = new Month_this_Insert();
         Bundle args = new Bundle();
-        args.putString(FRAGMENT_TAG, FRAGMENT_ADD_VALUE);
+        args.putString(FRAGMENT_TAG, arg);
         fragment.setArguments(args);
         return fragment;
     }
@@ -97,17 +101,51 @@ public class Month_this_Insert extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_in, container, false);
 
+
         mSingleton = Singleton.get();
         initColors();
+        initDrawables();
         initAllViews(view);
+
+        showCurrentHeaeder();
         initAllListeners(view);
+
         return view;
+    }
+
+    private void showCurrentHeaeder() {
+
+        if (getArguments() != null) {
+            Bundle bundle = getArguments();
+            bundle.getString(FRAGMENT_TAG);
+            if (bundle.getString(FRAGMENT_TAG) == FRAGMENT_ADD_CONVERTER) {
+                showHeaderInsertAndHideConverter();
+
+            }
+
+        } else {
+            showConvertHeaderAndHideInsert();
+        }
+    }
+
+    private void showConvertHeaderAndHideInsert() {
+        incomeText.setVisibility(View.VISIBLE);
+        outcomeText.setVisibility(View.VISIBLE);
+
+        convertText.setVisibility(View.INVISIBLE);
+    }
+
+    private void showHeaderInsertAndHideConverter() {
+        incomeText.setVisibility(View.INVISIBLE);
+        outcomeText.setVisibility(View.INVISIBLE);
+
+        convertText.setVisibility(View.VISIBLE);
     }
 
     private void updateColors(int i) {
         revealToolbar();
-        mAppBarLayout2.setBackgroundColor(toolbarColors[i]);
-        mToolbar.setBackgroundColor(toolbarColors[i]);
+        mAppBarLayout2.setBackground(arrayDrawable[i]);
+//        mToolbar.setBackgroundColor(toolbarColors[i]);
         mWindow.setStatusBarColor(toolbarColors[i]);
     }
 
@@ -129,9 +167,20 @@ public class Month_this_Insert extends Fragment {
         return ContextCompat.getColor(getContext(), res);
     }
 
+    private Drawable drawable(@DrawableRes int res) {
+        return ContextCompat.getDrawable(getContext(), res);
+    }
+
+    private void initDrawables() {
+        arrayDrawable = new Drawable[2];
+        arrayDrawable[0] = drawable(R.drawable.gradient_green);
+        arrayDrawable[1] = drawable(R.drawable.gradient_red);
+    }
+
     private void initAllViews(View view) {
 
         mWindow = getActivity().getWindow();
+        mWindow.setStatusBarColor(toolbarColors[0]);
 
         n1 = (TextView) view.findViewById(R.id.n1);
         n2 = (TextView) view.findViewById(R.id.n2);
@@ -151,9 +200,11 @@ public class Month_this_Insert extends Fragment {
         value = (TextView) view.findViewById(R.id.value);
         incomeText = (TextView) view.findViewById(R.id.incomeText);
         outcomeText = (TextView) view.findViewById(R.id.outcomeText);
+        convertText = (TextView) view.findViewById(R.id.convertText);
 
         circleLayout = (RevealLinearLayout) view.findViewById(R.id.layer2);
         mAppBarLayout2 = (AppBarLayout) view.findViewById(R.id.appbar2);
+        mAppBarLayout2.setBackground(arrayDrawable[0]);
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
     }
@@ -235,7 +286,7 @@ public class Month_this_Insert extends Fragment {
         backspace.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                value.setText(value.getText().subSequence(0, value.getText().length()-1));
+                value.setText(value.getText().subSequence(0, value.getText().length() - 1));
             }
         });
 

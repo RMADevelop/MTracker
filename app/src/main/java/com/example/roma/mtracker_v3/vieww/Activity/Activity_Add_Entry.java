@@ -33,6 +33,9 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
     public static final String FRAGMENT_TAG = "fragmentTag";
     public static final String FRAGMENT_ADD_VALUE = "value";
     public static final String FRAGMENT_ADD_TRANSACTION = "transaction";
+    public static final String FRAGMENT_ADD_CONVERTER = "convert";
+
+    private int arrayGradient[] = {R.drawable.gradient_red_reverse, R.drawable.gradient_green_reverse};
 
 
     private String valueTransaction = null;
@@ -55,6 +58,7 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         realm = Realm.getDefaultInstance();
 
         nextBtn = (Button) findViewById(R.id.button_next);
@@ -62,9 +66,29 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
             @Override
             public void onClick(View v) {
                 Log.v("FragmentTag", "" + getFragment().getClass());
-                if (getSupportFragmentManager().findFragmentById(R.id.fragment_host) instanceof Month_this_Insert || getSupportFragmentManager().findFragmentById(R.id.fragment_host) instanceof Month_this_insert_Description) {
-                    Log.v("MSG", "click");
+                if (findFragment() instanceof Month_this_Insert || findFragment() instanceof Month_this_insert_Description) {
+                    if (findFragment().getArguments() != null) {
+
+                        Bundle bundle = findFragment().getArguments();
+                        if (bundle.getString(FRAGMENT_TAG) != null) {
+                            if (bundle.getString(FRAGMENT_TAG).equals(FRAGMENT_ADD_CONVERTER) && !onInsertDescription) {
+                                Toast.makeText(Activity_Add_Entry.this, "Click", Toast.LENGTH_SHORT).show();
+                                Log.v("MSG", "clickERROR");
+
+                                Log.v("TESTTEST", "equals");
+                                TextView textView = (TextView) findFragment().getView().findViewById(R.id.value);
+                                String text = textView.getText().toString();
+                                Intent intent = new Intent();
+                                intent.putExtra("value", text);
+                                setResult(RESULT_OK, intent);
+                                finish();
+                                return;
+                            }
+                        }
+                    }
                     if (pl_mn == 1) {
+                        Toast.makeText(Activity_Add_Entry.this, "ClickFirst", Toast.LENGTH_SHORT).show();
+
                         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
                         TextView textView = (TextView) fragment.getView().findViewById(R.id.value);
                         String text = textView.getText().toString();
@@ -82,6 +106,8 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
 
                         goTo();
                     } else if (onInsertDescription) {
+                        Toast.makeText(Activity_Add_Entry.this, "ClickDescription", Toast.LENGTH_SHORT).show();
+
                         realm.executeTransaction(new Realm.Transaction() {
                             @Override
                             public void execute(Realm realm) {
@@ -95,6 +121,8 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
                         goTo();
 
                     } else {
+                        Toast.makeText(Activity_Add_Entry.this, "ClickMinus", Toast.LENGTH_SHORT).show();
+
                         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
                         TextView textView = (TextView) fragment.getView().findViewById(R.id.value);
                         String text = textView.getText().toString();
@@ -135,6 +163,7 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
 //                    goTo();
 
 
+                ;
             }
         });
 
@@ -154,11 +183,20 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
         return getFragment();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        setColorButton();
+    }
+
+
     public Fragment getFragment() {
         if (getTagForFragment().equals(FRAGMENT_ADD_TRANSACTION))
             return Transaction.newInstance();
         else if (getTagForFragment().equals(FRAGMENT_ADD_VALUE))
             return new Month_this_Insert();
+        else if ((getTagForFragment().equals(FRAGMENT_ADD_CONVERTER)))
+            return Month_this_Insert.newInstance(FRAGMENT_ADD_CONVERTER);
         return null;
     }
 
@@ -212,9 +250,25 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
         this.idImages = idImages;
     }
 
+    private void setColorButton() {
+        if (findFragment() instanceof Month_this_Insert) {
+            nextBtn.setBackgroundResource(arrayGradient[1]);
+        } else if (findFragment() instanceof Transaction) {
+            nextBtn.setBackgroundResource(arrayGradient[0]);
+        }
+    }
+
+    public Fragment findFragment() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_host);
+
+        return fragment;
+    }
+
     @Override
     public void onFragmentInteraction(int i) {
         pl_mn = i;
+
+        nextBtn.setBackgroundResource(arrayGradient[i]);
     }
 
     @Override

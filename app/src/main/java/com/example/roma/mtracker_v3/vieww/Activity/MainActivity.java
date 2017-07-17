@@ -13,22 +13,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.roma.mtracker_v3.Adapters.TabLayoutAdapter;
 import com.example.roma.mtracker_v3.R;
-import com.example.roma.mtracker_v3.vieww.Fragment.Page_Month_This;
+import com.example.roma.mtracker_v3.vieww.Fragment.Page_Converter;
 
 import io.realm.Realm;
 
-import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.*;
+import static android.R.attr.fragment;
+import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.FRAGMENT_ADD_CONVERTER;
+import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.FRAGMENT_ADD_TRANSACTION;
+import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.FRAGMENT_ADD_VALUE;
+import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.FRAGMENT_TAG;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements Page_Converter.OnClickConvertedListener {
 
 
-    private FragmentManager fm;
-    private Fragment mFragmentRecycler;
     private DrawerLayout drawerLayout;
     private Toolbar toolbar;
     private TabLayout mTabLayout;
@@ -43,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
 
         initToolbar();
         initDrawerLayout();
-        initFragments();
 
         initTabs();
 
@@ -57,11 +61,14 @@ public class MainActivity extends AppCompatActivity {
 
         mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
         mTabLayout.setupWithViewPager(viewPager);
+
+
     }
 
     private void showNotificationTab() {
         viewPager.setCurrentItem(0);
     }
+
     private void showArchive() {
         viewPager.setCurrentItem(1);
     }
@@ -136,23 +143,37 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initFragments() {
-        fm = getSupportFragmentManager();
-        mFragmentRecycler = fm.findFragmentById(R.id.container);
-        if (mFragmentRecycler == null) {
-            mFragmentRecycler = new Page_Month_This();
-            fm.beginTransaction()
-                    .add(R.id.container, mFragmentRecycler)
-                    .commit();
-        }
-    }
-
 
     public void IntentToAdd(String fragmentTag) {
         Intent intent = new Intent(this, Activity_Add_Entry.class);
         intent.putExtra(FRAGMENT_TAG, fragmentTag);
+
+        if (fragmentTag.equals(FRAGMENT_ADD_CONVERTER)) {
+            startActivityForResult(intent, 1);
+            Log.v("TESTTEST", "activiryForResult");
+            return;
+        }
         startActivity(intent);
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            String value = data.getStringExtra("value");
+            View view =  viewPager.findViewWithTag("tagView");
+            TextView textView = (TextView) view.findViewById(R.id.value_in_converter);
+
+            textView.setText(value);
+        }
+
+    }
+
+    @Override
+    public void valueFieldClickListener() {
+        IntentToAdd(FRAGMENT_ADD_CONVERTER);
+    }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to

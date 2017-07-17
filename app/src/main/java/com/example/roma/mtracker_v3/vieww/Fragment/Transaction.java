@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,8 @@ public class Transaction extends Fragment {
         initDescription(view);
         initValueField(view);
         initDateField(view);
+
+        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(),R.color.red));
 
 
         return view;

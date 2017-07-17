@@ -20,14 +20,15 @@ import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
 
+import com.example.roma.mtracker_v3.model.DateCustomChanger;
 import com.example.roma.mtracker_v3.model.InsertDescription;
 import com.example.roma.mtracker_v3.model.Item;
 
-/**
- * Created by Roma on 17.06.2017.
- */
+
 
 public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdapter.MainVH> {
+
+    private DateCustomChanger dateCustom = new DateCustomChanger();
 
     private InsertDescription arrayInsertDescription = new InsertDescription();
     private ArrayList<InsertDescription> arrayImages;
@@ -45,6 +46,16 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
     }
 
     int counter = getCountSection(result);
+
+
+
+    {
+        try {
+            dateCustom.setDate(result.get(0).getDate());
+        } catch (Exception e) {
+
+        }
+    }
 
     public Calendar getItemCalendar(Item item) {
         Date date = item.getDate();
@@ -120,6 +131,8 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
 
 
     }
+
+
 
     public int getTotalHeader(int section) {
         int start = getCalendarDayItem(result.get(0));
@@ -200,10 +213,12 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
 
     @Override
     public void onBindHeaderViewHolder(MainVH holder, int section, boolean expanded) {
+
         try {
             holder.valueHeader.setText(Integer.toString(getTotalHeader(section)));
             holder.dateDayHeader.setText(Integer.toString(getDayHeader(section)));
             holder.dateDayWeekHeader.setText(getDayWeekHeader(section));
+            holder.dayOfMonth.setText(dateCustom.getMonth());
         } catch (Exception e) {
 
         }
@@ -276,6 +291,7 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
         TextView description;
         TextView value;
 
+        TextView dayOfMonth;
         TextView valueHeader;
         TextView dateDayHeader;
         TextView dateDayWeekHeader;
@@ -286,14 +302,12 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
             description = (TextView) itemView.findViewById(R.id.descriptionChild);
             value = (TextView) itemView.findViewById(R.id.valueChild);
 
+            dayOfMonth =(TextView) itemView.findViewById(R.id.dayOfMonth);
             valueHeader = (TextView) itemView.findViewById(R.id.totalValueOnDay);
             dateDayHeader = (TextView) itemView.findViewById(R.id.dateText);
             dateDayWeekHeader = (TextView) itemView.findViewById(R.id.dayOfWeekText);
             // Setup view holder. You'd want some views to be optional, e.g. the
             // header/footer will have views that normal item views do or do not have.
         }
-
-
     }
-
 }

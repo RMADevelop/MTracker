@@ -2,12 +2,14 @@ package com.example.roma.mtracker_v3.vieww.Fragment;
 
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.roma.mtracker_v3.Adapters.MonthThisAdapter;
 import com.example.roma.mtracker_v3.R;
@@ -21,6 +23,13 @@ import com.example.roma.mtracker_v3.model.Item;
 
 
 public class Page_Month_This extends Fragment {
+
+    private FloatingActionButton fab;
+
+    private TextView incomeValue;
+    private TextView outcomeValue;
+    private TextView totalValue;
+
     private RecyclerView mRecyclerView;
     private ArrayList<Item> items;
     private Realm mRealm;
@@ -35,178 +44,77 @@ public class Page_Month_This extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_month_this, container, false);
+        initFab(view);
+
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_month_this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                if (dy > 0 || dy < 0 && fab.isShown())
+                    fab.hide();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    fab.show();
+                }
+                super.onScrollStateChanged(recyclerView, newState);
+
+            }
+        });
 
         mRealm = Realm.getDefaultInstance();
+
+        initHeader(view);
 
         MonthThisAdapter adapter = new MonthThisAdapter();
         mRecyclerView.setAdapter(adapter);
         return view;
     }
 
+    private void initFab(View view) {
+        fab = (FloatingActionButton) view.findViewById(R.id.fab_month_this);
+    }
 
-//    public class ViewHolder1 extends RecyclerView.ViewHolder {
-//        TextView summa;
-//
-//        public ViewHolder1(View itemView) {
-//            super(itemView);
-//            summa = (TextView) itemView.findViewById(R.id.totalValueFE);
-//        }
-//    }
-//
-//    public class ViewHolder2 extends RecyclerView.ViewHolder {
-//        TextView date;
-//
-//        public ViewHolder2(View itemView) {
-//            super(itemView);
-//            date = (TextView) itemView.findViewById(R.id.child);
-//        }
-//    }
-//
-//    public class ViewHolder3 extends RecyclerView.ViewHolder {
-//        TextView date;
-//
-//        public ViewHolder3(View itemView) {
-//            super(itemView);
-//            date = (TextView) itemView.findViewById(R.id.dateText);
-//        }
-//    }
+    private void initHeader(View view) {
+        incomeValue = (TextView) view.findViewById(R.id.incomeValueFE);
+        outcomeValue = (TextView) view.findViewById(R.id.outcomeValueFE);
+        totalValue = (TextView) view.findViewById(R.id.totalValueFE);
 
 
-//    public class ViewHolder1 extends RecyclerView.ViewHolder {
-//        TextView summa;
-//
-//        public ViewHolder1(View itemView) {
-//            super(itemView);
-//            summa = (TextView) itemView.findViewById(R.id.totalValueFE);
-//        }
-//    }
-//
-//    public class ViewHolder2 extends RecyclerView.ViewHolder {
-//        TextView date;
-//
-//        public ViewHolder2(View itemView) {
-//            super(itemView);
-//            date = (TextView) itemView.findViewById(R.id.child);
-//        }
-//    }
-//
-//    public class ViewHolder3 extends RecyclerView.ViewHolder {
-//        TextView date;
-//
-//        public ViewHolder3(View itemView) {
-//            super(itemView);
-//            date = (TextView) itemView.findViewById(R.id.dateText);
-//        }
-//    }
-//
-//    public class RecyclerV extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-//        boolean firstEl = true;
-//        int count = 0;
-//
-//        RealmResults<Item> result = mRealm.where(Item.class).findAll();
-//
-//
-//        public RealmResults<Item> getResult() {
-//            result = result.sort("mDate", Sort.DESCENDING);
-//            return result;
-//        }
-//
-//        public int getCalendarNow() {
-//            Date date = new Date();
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(date);
-//            int min = calendar.get(Calendar.MINUTE);
-//
-//            return min;
-//        }
-//
-//        public int getCalendarDayItem(Item item) {
-//            Date date = item.getDate();
-//            Calendar calendar = Calendar.getInstance();
-//            calendar.setTime(date);
-//            int min = calendar.get(Calendar.MINUTE);
-//
-//            return min;
-//        }
-//
-//        int minuts = getCalendarNow();
-//
-//
-//        private final int HEADER = 0, SECTION = 1, ELEMENTS = 2;
-//
-//        @Override
-//        public int getItemViewType(int position) {
-//
-//
-//            Log.v("result", "" + result.get(position) + " size " + result.size() + " count " + count);
-//            if (position == 0) {
-//                if (firstEl) {
-//                    Log.v("counter", " " + count);
-//                    count++;
-//                    firstEl = false;
-//                }
-//
-//                return HEADER;
-//            }
-//
-//            if (minuts == getCalendarDayItem(result.get(position))) {
-//                return ELEMENTS;
-//            } else if (minuts != getCalendarDayItem(result.get(position))) {
-////                count++;
-//                minuts = getCalendarDayItem(result.get(position));
-//                return SECTION;
-//            }
-//            return HEADER;
-//
-//        }
-//
-//
-//        @Override
-//        public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            RecyclerView.ViewHolder viewHolder;
-//            LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-//
-//            if (viewType == HEADER) {
-//                View view = inflater.inflate(R.layout.first_element, parent, false);
-//                viewHolder = new ViewHolder1(view);
-//                return viewHolder;
-//            }
-//            if (viewType == ELEMENTS) {
-//                View view = inflater.inflate(R.layout.child_recycle_item_thismonth, parent, false);
-//                viewHolder = new ViewHolder2(view);
-//                return viewHolder;
-//            } else {
-//                View view = inflater.inflate(R.layout.section_recycle_item_thismonth, parent, false);
-//                viewHolder = new ViewHolder3(view);
-//                return viewHolder;
-//            }
-//
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-//            if (holder.getItemViewType() == HEADER) {
-//                ViewHolder1 viewHolder = (ViewHolder1) holder;
-//                viewHolder.summa.setText(getSumma());
-//            }
-//            if (holder.getItemViewType() == ELEMENTS) {
-//                ViewHolder2 viewHolder2 = (ViewHolder2) holder;
-//                viewHolder2.date.setText(String.valueOf(getResult().get(position).getValue()));
-//            }
-//            if (holder.getItemViewType() == SECTION) {
-//                ViewHolder3 viewHolder3 = (ViewHolder3) holder;
-//                viewHolder3.date.setText("test");
-//            }
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            RealmResults<Item> result = mRealm.where(Item.class).findAll();
-//            return result.size();
-//        }
-//    }
+        incomeValue.setText(getIncomeValue());
+        outcomeValue.setText("-" + getOutcomeValue());
+        totalValue.setText(getSumma());
+    }
+
+    private String getOutcomeValue() {
+        int value = 0;
+        RealmResults<Item> result = mRealm.where(Item.class).findAll();
+
+        for (Item item : result) {
+            if (item.getPl_mn() == 0) {
+                value += item.getValue();
+            }
+        }
+        return String.valueOf(value);
+    }
+
+    private String getIncomeValue() {
+        int value = 0;
+        RealmResults<Item> result = mRealm.where(Item.class).findAll();
+
+        for (Item item : result) {
+            if (item.getPl_mn() == 1) {
+                value += item.getValue();
+            }
+
+        }
+        return String.valueOf(value);
+
+    }
 
 
     private String getSumma() {

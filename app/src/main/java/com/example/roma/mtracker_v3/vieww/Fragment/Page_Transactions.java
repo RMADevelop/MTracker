@@ -11,11 +11,12 @@ import android.view.ViewGroup;
 
 import com.example.roma.mtracker_v3.Adapters.TransactionAdapter;
 import com.example.roma.mtracker_v3.R;
+import com.example.roma.mtracker_v3.model.DateCustomChanger;
 
 
 public class Page_Transactions extends Fragment {
 
-
+    private DateCustomChanger dateCustom;
     private RecyclerView mRecyclerView;
 
     public Page_Transactions() {
@@ -45,7 +46,7 @@ public class Page_Transactions extends Fragment {
         // Inflate the layout for this fragment
 
         View view = inflater.inflate(R.layout.fragment_page_transaction, container, false);
-        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_page_transaction);
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_transaction);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         TransactionAdapter adapter = new TransactionAdapter();

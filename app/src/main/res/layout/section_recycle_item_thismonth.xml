@@ -19,7 +19,7 @@
             android:id="@+id/dateText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TEST"
+            android:text="dayDate"
             android:textSize="36sp"
             app:layout_constraintLeft_toLeftOf="parent"
             />
@@ -29,17 +29,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="6dp"
             android:text="day"
-            android:textSize="16sp"
+            android:textSize="12sp"
             app:layout_constraintLeft_toRightOf="@id/dateText"
             app:layout_constraintTop_toTopOf="@id/dateText"/>
 
         <TextView
+            android:id="@+id/dayOfMonth"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="date"
+            android:text="datedate"
             android:textSize="16sp"
+            android:layout_marginBottom="5dp"
             app:layout_constraintLeft_toRightOf="@id/dateText"
             app:layout_constraintBottom_toBottomOf="@id/dateText"
             />

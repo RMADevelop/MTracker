@@ -7,92 +7,92 @@
     android:layout_marginTop="?attr/actionBarSize"
     >
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                    android:id="@+id/first_element"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="8dp"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
->
+    <!--<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
+                    <!--android:id="@+id/first_element"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginBottom="8dp"-->
+                    <!--android:layout_marginTop="8dp"-->
+                    <!--android:orientation="vertical"-->
+                    <!--android:paddingLeft="16dp"-->
+                    <!--android:paddingRight="16dp"-->
+<!--&gt;-->
 
 
-        <TextView
-            android:id="@+id/overview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Обзор"
-            android:textSize="25sp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/overview"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Обзор"-->
+            <!--android:textSize="25sp"/>-->
 
-        <TextView
-            android:id="@+id/label_overview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/overview"
-            android:text="нажмите для просмотра отчета"/>
+        <!--<TextView-->
+            <!--android:id="@+id/label_overview"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/overview"-->
+            <!--android:text="нажмите для просмотра отчета"/>-->
 
-        <TextView
-            android:id="@+id/hr"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_below="@id/label_overview"
-            android:layout_marginTop="10dp"
-            android:background="#22111111"/>
+        <!--<TextView-->
+            <!--android:id="@+id/hr"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_below="@id/label_overview"-->
+            <!--android:layout_marginTop="10dp"-->
+            <!--android:background="#22111111"/>-->
 
-        <TextView
-            android:id="@+id/incomeFE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/label_overview"
-            android:layout_marginTop="21dp"
-            android:text="income"
-            android:textSize="15sp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/incomeFE"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/label_overview"-->
+            <!--android:layout_marginTop="21dp"-->
+            <!--android:text="income"-->
+            <!--android:textSize="15sp"/>-->
 
-        <TextView
-            android:id="@+id/outcomeFE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/incomeFE"
-            android:layout_marginTop="8dp"
-            android:text="outcome"
-            android:textSize="15sp"/>
+        <!--<TextView-->
+            <!--android:id="@+id/outcomeFE"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_below="@id/incomeFE"-->
+            <!--android:layout_marginTop="8dp"-->
+            <!--android:text="outcome"-->
+            <!--android:textSize="15sp"/>-->
 
-        <TextView
-            android:id="@+id/incomeValueFE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/incomeFE"
-            android:text="10435345"/>
+        <!--<TextView-->
+            <!--android:id="@+id/incomeValueFE"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignTop="@id/incomeFE"-->
+            <!--android:text="10435345"/>-->
 
-        <TextView
-            android:id="@+id/outcomeValueFE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/outcomeFE"
-            android:text="222222"/>
+        <!--<TextView-->
+            <!--android:id="@+id/outcomeValueFE"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_alignTop="@id/outcomeFE"-->
+            <!--android:text="222222"/>-->
 
-        <TextView
-            android:id="@+id/hr2"
-            android:layout_width="wrap_content"
-            android:layout_height="1dp"
-            android:layout_alignLeft="@+id/totalValueFE"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/outcomeValueFE"
-            android:layout_marginTop="5dp"
-            android:background="#22111111"/>
+        <!--<TextView-->
+            <!--android:id="@+id/hr2"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="1dp"-->
+            <!--android:layout_alignLeft="@+id/totalValueFE"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_below="@id/outcomeValueFE"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:background="#22111111"/>-->
 
-        <TextView
-            android:id="@id/totalValueFE"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_below="@id/hr2"
-            android:layout_marginTop="5dp"
-            android:paddingLeft="10dp"
-            android:text="wetwetwet"/>
-    </RelativeLayout>
+        <!--<TextView-->
+            <!--android:id="@id/totalValueFE"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_below="@id/hr2"-->
+            <!--android:layout_marginTop="5dp"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:text="wetwetwet"/>-->
+    <!--</RelativeLayout>-->
 </android.support.v7.widget.CardView>
