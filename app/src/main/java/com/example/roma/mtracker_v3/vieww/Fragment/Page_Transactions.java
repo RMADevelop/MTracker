@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.roma.mtracker_v3.Adapters.TransactionAdapter;
 import com.example.roma.mtracker_v3.R;
@@ -18,6 +19,7 @@ public class Page_Transactions extends Fragment {
 
     private DateCustomChanger dateCustom;
     private RecyclerView mRecyclerView;
+
 
     public Page_Transactions() {
         // Required empty public constructor
@@ -32,13 +34,6 @@ public class Page_Transactions extends Fragment {
         return fragment;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +46,8 @@ public class Page_Transactions extends Fragment {
 
         TransactionAdapter adapter = new TransactionAdapter();
         mRecyclerView.setAdapter(adapter);
+
+
         return view;
     }
 
