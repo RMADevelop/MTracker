@@ -211,6 +211,7 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/button_."
                 style="@style/textButtonKeyboards"
                 android:text="."/>
 

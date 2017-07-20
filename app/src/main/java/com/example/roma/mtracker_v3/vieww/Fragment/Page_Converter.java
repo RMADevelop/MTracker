@@ -13,21 +13,32 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.roma.mtracker_v3.R;
+import com.example.roma.mtracker_v3.model.Converter;
+import com.example.roma.mtracker_v3.model.DateCustomChanger;
 import com.example.roma.mtracker_v3.model.retrofit.Controller;
 import com.example.roma.mtracker_v3.model.retrofit.Currency;
 import com.example.roma.mtracker_v3.model.retrofit.CurrencyAPI;
 import com.example.roma.mtracker_v3.model.retrofit.DataCurrency;
+import com.victor.loading.rotate.RotateLoading;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.http.Query;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,8 +49,18 @@ public class Page_Converter extends Fragment {
     private TextView EURinRUB;
     private TextView GBPinRUB;
     private TextView currencyDate;
+    TextView valueOut;
 
+    private Button update;
+    private RotateLoading animViewUpdate;
+    private LinearLayout currencyLayout;
     private DateCustomChanger dateCustom;
+
+
+    private float RUB;
+    private float USD;
+    private float EUR;
+    private float GBP;
 
 
     public interface OnClickConvertedListener {
@@ -75,6 +96,7 @@ public class Page_Converter extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.page_converter, container, false);
         initCurrencyField(view);
+        initUpdateViews(view);
 
 
         view.setTag("tagView");
@@ -82,15 +104,66 @@ public class Page_Converter extends Fragment {
         return view;
     }
 
+    private void initUpdateViews(View view) {
+        update = (Button) view.findViewById(R.id.button_update_converter);
+        animViewUpdate = (RotateLoading) view.findViewById(R.id.anim_view);
+
+        update.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getCurrencyREST();
+            }
+        });
+    }
+
     private void initCurrencyField(View view) {
+        currencyLayout = (LinearLayout) view.findViewById(R.id.linearLayout);
+
         USDinRUB = (TextView) view.findViewById(R.id.currencyUSD_valueRUB_converter);
         EURinRUB = (TextView) view.findViewById(R.id.currencyEUR_valueRUB_converter);
         GBPinRUB = (TextView) view.findViewById(R.id.currencyGBR_valueRUB_converter);
 
         currencyDate = (TextView) view.findViewById(R.id.currencyDate);
+
     }
 
+    private void getCurrencyREST() {
+        setLoadingState();
+        Controller.createService((CurrencyAPI.class)).getData(Controller.API_KEY, Controller.API_CUR).enqueue(new Callback<DataCurrency>() {
+            @Override
+            public void onResponse(Call<DataCurrency> call, Response<DataCurrency> response) {
+                Log.v("retrofitTEST", "" + response.body().getQuotes().getUSDRUB());
+                if (response.isSuccessful()) {
+                    updateCurrency(response.body().getQuotes());
+//                    updateDateText(response.body());
 
+                    String simple = new SimpleDateFormat("dd.MM.yyyy").format(new Date(response.body().getTimestamp() * 1000L));
+                    currencyDate.setText(simple);
+                    animViewUpdate.stop();
+
+                    disableLoadingState();
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<DataCurrency> call, Throwable t) {
+                disableLoadingState();
+
+
+            }
+        });
+    }
+
+    public void setLoadingState() {
+        animViewUpdate.start();
+        currencyLayout.setVisibility(View.INVISIBLE);
+    }
+
+    public void disableLoadingState() {
+        animViewUpdate.stop();
+        currencyLayout.setVisibility(View.VISIBLE);
+    }
 
 
     @Override
@@ -104,97 +177,46 @@ public class Page_Converter extends Fragment {
 
         }
 
-
-        Controller.createService((CurrencyAPI.class)).getData(Controller.API_KEY, Controller.API_CUR).enqueue(new Callback<DataCurrency>() {
-            @Override
-            public void onResponse(Call<DataCurrency> call, Response<DataCurrency> response) {
-                Log.v("retrofitTEST", ""+ response.body().getQuotes().getUSDRUB());
-                if (response.isSuccessful()) {
-                        updateCurrency();
-                    }    
-            }
-
-            @Override
-            public void onFailure(Call<DataCurrency> call, Throwable t) {
-
-            }
-        });
-
-//        Controller.createService(CurrencyAPI.class).getData("RUB", "USD,EUR,GBP").enqueue(new Callback<Currency>() {
-//            @Override
-//            public void onResponse(Call<Currency> call, Response<Currency> response) {
-//                if (response.isSuccessful()) {
-//                    Log.v("retrofitTEST", response.body().getRates().getEUR() + " ");
-//
-//                    updateCurrency(response.body().getRates());
-//                    updateReverseDate(response.body().getDate());
-//
-//                }
-//            }
-//
-//
-//
-//            @Override
-//            public void onFailure(Call<Currency> call, Throwable t) {
-//
-//            }
-//        });
     }
 
-private void updateCurrency(Quotes quotes) {
-    float RUBinUSD = getRUBinUSD(quotes);
-    float RUBinEUR = getRUBnEUR(quotes);
-    float RUBinGBP = getRUBinGBP(quotes);
 
-    USDinRUB.setText(trimerNumberAndReturnString(RUBinUSD));
-    EURinRUB.setText(trimerNumberAndReturnString(RUBinEUR);
-    USDinRUB.setText(trimerNumberAndReturnString(RUBinGBP));
-}
+    private void updateCurrency(DataCurrency.Quotes quotes) {
+        float RUBinUSD = getRUBinUSD(quotes);
+        float RUBinEUR = getRUBnEUR(quotes);
+        float RUBinGBP = getRUBinGBP(quotes);
 
-private float getRUBinUSD(Quotes quotes) {
-    return quotes.getUSDRUB();
-}
-private float getRUBnEUR(Quotes quotes) {
-    return quotes.getUSDRUB()*quotes.getUSDEUR();
-}
-private float getRUBinGBP(Quotes quotes) {
-    return quotes.getUSDRUB()*quotes.getUSDGBP();
-}
-
-private float trimerNumberAndReturnString(float currency) {
-     String trimCurrency = String.format("%.2f", currency);
-     return trimCurrency;
-}
-
-private String getDateOfUpdate(DataCurrency dataCurrency) {
-    dateCustom = new DateCustomChanger(dataCurrency.getTimestamp());
-
-    String date = String.format("%d.$d.%.d")
-
-}
+        USDinRUB.setText(trimerNumberAndReturnString(RUBinUSD));
+        EURinRUB.setText(trimerNumberAndReturnString(RUBinEUR));
+        GBPinRUB.setText(trimerNumberAndReturnString(RUBinGBP));
+    }
 
 
-    // private void updateCurrency(Currency.Rates rates) {
-    //     float currencyUSDafterResponce = 1 / rates.getUSD();
-    //     String USD = String.format("%.2f", currencyUSDafterResponce);
-    //     USDinRUB.setText(USD);
+    private float getRUBinUSD(DataCurrency.Quotes quotes) {
 
-    //     float currencyEURafterResponce = 1 / rates.getEUR();
-    //     String EUR = String.format("%.2f", currencyEURafterResponce);
-    //     EURinRUB.setText(EUR);
+        return USD = quotes.getUSDRUB();
+    }
 
-    //     float currencyGBPafterResponce = 1/ rates.getGBP();
-    //     String GBP = String.format("%.2f", currencyGBPafterResponce);
-    //     GBPinRUB.setText(GBP);
+    private float getRUBnEUR(DataCurrency.Quotes quotes) {
+        return EUR = (quotes.getUSDRUB() / quotes.getUSDEUR());
+    }
 
-    // }
+    private float getRUBinGBP(DataCurrency.Quotes quotes) {
+        return GBP = quotes.getUSDRUB() / quotes.getUSDGBP();
+    }
 
-    // private void updateReverseDate(String date) {
-    //     StringBuilder dateNormallyFormat = new StringBuilder();
-    //     dateNormallyFormat.append(date.substring(8)).append(".").append(date.substring(5,7)).append(".").append(date.substring(0,4));
+    private String trimerNumberAndReturnString(float currency) {
+        String trimCurrency = String.format("%.2f", currency);
+        return trimCurrency;
+    }
 
-    //     currencyDate.append(dateNormallyFormat);
-    // }
+    private String getDateOfUpdate(DataCurrency dataCurrency) {
+        dateCustom = new DateCustomChanger(dataCurrency.getTimestamp());
+
+        String date = String.format("%s.%s.%d", dateCustom.getDay(), dateCustom.getMonth(), dateCustom.getCalendar().get(Calendar.YEAR));
+        return date;
+
+    }
+
 
     private void initValueIn(View view) {
         TextView valueIn = (TextView) view.findViewById(R.id.value_in_converter);
@@ -205,6 +227,19 @@ private String getDateOfUpdate(DataCurrency dataCurrency) {
             }
         });
 
+        valueOut = (TextView) view.findViewById(R.id.value_out_converter);
+        valueOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                //TODO конвертер надо создавать если преференсы не равны нулю или после реквеста
+                Converter converter = new Converter(USD, EUR, GBP, RUB);
+                final float result = converter.convert(Converter.IN_EUR, 3, Converter.OUT_USD);
+
+                valueOut.setText(trimerNumberAndReturnString(result));
+
+            }
+        });
     }
 
 

@@ -27,6 +27,13 @@ public class DateCustomChanger {
         mCalendar.setTime(date);
     }
 
+    public DateCustomChanger(int dateIn) {
+        this.date = new Date(dateIn);
+        mCalendar = Calendar.getInstance();
+        mCalendar.setTime(date);
+    }
+
+
 
     public String getDay() {
         day = mCalendar.get(Calendar.DAY_OF_MONTH);
@@ -52,5 +59,9 @@ public class DateCustomChanger {
         this.date = date;
         mCalendar = Calendar.getInstance();
         mCalendar.setTime(date);
+    }
+
+    public Calendar getCalendar () {
+        return mCalendar;
     }
 }

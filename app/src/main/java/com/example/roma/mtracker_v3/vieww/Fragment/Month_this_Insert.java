@@ -53,6 +53,7 @@ public class Month_this_Insert extends Fragment {
     private TextView n8;
     private TextView n9;
     private TextView n0;
+    private TextView nTochka;
     private ImageView backspace;
     private int xC;
     private int yC;
@@ -192,6 +193,7 @@ public class Month_this_Insert extends Fragment {
         n8 = (TextView) view.findViewById(R.id.n8);
         n9 = (TextView) view.findViewById(R.id.n9);
         n0 = (TextView) view.findViewById(R.id.n0);
+        nTochka = (TextView) view.findViewById(R.id.button__);
         backspace = (ImageView) view.findViewById(R.id.button_backspace);
 
         minus = (TextView) view.findViewById(R.id.minus);
@@ -282,6 +284,13 @@ public class Month_this_Insert extends Fragment {
                 value.setText(value.getText() + "8");
             }
         });
+        nTochka.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                value.setText(value.getText() + ".");
+            }
+        });
+
 
         backspace.setOnClickListener(new View.OnClickListener() {
             @Override
