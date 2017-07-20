@@ -26,10 +26,10 @@
         <item>текущем месяце</item>
         <item>следующем месяце</item>
     </string-array>
-    <string-array name="valute">
-        <item>DOL</item>
-        <item>EUR</item>
+    <string-array name="currency">
         <item>RUB</item>
+        <item>USD</item>
+        <item>EUR</item>
         <item>GBP</item>
     </string-array>
 </resources>

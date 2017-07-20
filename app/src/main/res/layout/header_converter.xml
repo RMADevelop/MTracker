@@ -64,10 +64,10 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="10dp"
-                android:src="@mipmap/ic_currency_rub"
+                android:src="@mipmap/ic_rub"
                 />
         </LinearLayout>
 
@@ -98,10 +98,10 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="10dp"
-                android:src="@mipmap/ic_currency_rub"
+                android:src="@mipmap/ic_rub"
                 />
         </LinearLayout>
 
@@ -130,10 +130,10 @@
 
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="10dp"
-                android:src="@mipmap/ic_currency_rub"
+                android:src="@mipmap/ic_rub"
                 />
         </LinearLayout>
 

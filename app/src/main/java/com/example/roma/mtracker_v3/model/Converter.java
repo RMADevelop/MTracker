@@ -1,34 +1,35 @@
 package com.example.roma.mtracker_v3.model;
 
+import android.util.Log;
+
 /**
  * Created by Roma on 19.07.2017.
  */
 
 public class Converter {
 
-    public static final String OUT_RUB = "out_rub";
-    public static final String OUT_USD = "out_usd";
-    public static final String OUT_EUR = "out_eur";
-    public static final String OUT_GBP = "out_gbp";
+    public static final int OUT_RUB = 0;
+    public static final int OUT_USD = 1;
+    public static final int OUT_EUR = 2;
+    public static final int OUT_GBP = 3;
 
-    public static final String IN_RUB = "in_rub";
-    public static final String IN_USD = "in_usd";
-    public static final String IN_EUR = "in_eur";
-    public static final String IN_GBP = "in_gbp";
+    public static final int IN_RUB = 0;
+    public static final int IN_USD = 1;
+    public static final int IN_EUR = 2;
+    public static final int IN_GBP = 3;
 
     float rubC = 1;
     float usdC;
     float eurC;
     float gbpC;
 
-    public Converter(float usdC, float eurC, float gbpC, float rubC) {
+    public Converter(float usdC, float eurC, float gbpC) {
         this.usdC = usdC;
         this.eurC = eurC;
         this.gbpC = gbpC;
-        this.rubC = rubC;
     }
 
-    public float convert(String currencyIn, float in, String currencyOUT) {
+    public float convert(int currencyIn, float in, int currencyOUT) {
         float result = 0;
         switch (currencyOUT) {
             case OUT_RUB:
@@ -47,7 +48,7 @@ public class Converter {
         return result;
     }
 
-    private float convertToGBP(String currencyIn, float in) {
+    private float convertToGBP(int currencyIn, float in) {
         float result;
         switch (currencyIn) {
             case IN_GBP:
@@ -69,7 +70,7 @@ public class Converter {
         return result;
     }
 
-    private float convertToEUR(String currencyIn, float in) {
+    private float convertToEUR(int currencyIn, float in) {
         float result;
         switch (currencyIn) {
             case IN_EUR:
@@ -91,7 +92,7 @@ public class Converter {
         return result;
     }
 
-    private float convertToUSD(String currencyIn, float in) {
+    private float convertToUSD(int currencyIn, float in) {
         float result;
         switch (currencyIn) {
             case IN_USD:
@@ -104,7 +105,8 @@ public class Converter {
                 result = in * gbpC / usdC;
                 break;
             case IN_RUB:
-                result = in * rubC / usdC;
+                result = in / usdC;
+                Log.v("CurrencyFloat", in + " " +usdC + " " + result);
                 break;
             default:
                 result = in;
@@ -112,7 +114,7 @@ public class Converter {
         return result;
     }
 
-    private float convertToRUB(String currencyIn, float in) {
+    private float convertToRUB(int currencyIn, float in) {
         float result;
         switch (currencyIn) {
             case IN_RUB:
