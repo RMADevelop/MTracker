@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Roma on 20.07.2017.
  */
 
-public class ConverterSpinnerImageManager {
+public class SpinnerConverterImageManager {
     public static final int itemRUB = 0;
     public static final int itemUSD = 1;
     public static final int itemEUR = 2;
@@ -17,7 +17,7 @@ public class ConverterSpinnerImageManager {
 
     List<Integer> arrayImage;
 
-    public ConverterSpinnerImageManager() {
+    public SpinnerConverterImageManager() {
         arrayImage = new ArrayList<>();
         arrayImage.add(R.mipmap.ic_rub);
         arrayImage.add(R.mipmap.ic_dollar);

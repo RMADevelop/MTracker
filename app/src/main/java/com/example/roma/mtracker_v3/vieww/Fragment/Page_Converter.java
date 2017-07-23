@@ -3,13 +3,7 @@ package com.example.roma.mtracker_v3.vieww.Fragment;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.NestedScrollView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,34 +13,29 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.roma.mtracker_v3.R;
 import com.example.roma.mtracker_v3.model.Converter;
-import com.example.roma.mtracker_v3.model.ConverterSpinnerImageManager;
+import com.example.roma.mtracker_v3.model.SpinnerConverterImageManager;
 import com.example.roma.mtracker_v3.model.DateCustomChanger;
 import com.example.roma.mtracker_v3.model.SPreferenceManager;
 import com.example.roma.mtracker_v3.model.retrofit.Controller;
-import com.example.roma.mtracker_v3.model.retrofit.Currency;
 import com.example.roma.mtracker_v3.model.retrofit.CurrencyAPI;
 import com.example.roma.mtracker_v3.model.retrofit.DataCurrency;
 import com.victor.loading.rotate.RotateLoading;
 
-import java.sql.Time;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-import java.util.logging.Handler;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.Query;
 
+import static com.example.roma.mtracker_v3.model.DateCustomChanger.*;
 import static com.example.roma.mtracker_v3.model.SPreferenceManager.*;
 
 /**
@@ -147,7 +136,7 @@ public class Page_Converter extends Fragment {
     }
 
     private void initSpinners(View view) {
-        final ConverterSpinnerImageManager imageM = new ConverterSpinnerImageManager();
+        final SpinnerConverterImageManager imageM = new SpinnerConverterImageManager();
 
         imageIN = (ImageView) view.findViewById(R.id.image_currency_IN_converter);
         imageOUT = (ImageView) view.findViewById(R.id.image_currency_OUT_converter);
@@ -183,7 +172,7 @@ public class Page_Converter extends Fragment {
 
     }
 
-    private void setImageSpinner(ImageView imageView, int position, ConverterSpinnerImageManager imageM) {
+    private void setImageSpinner(ImageView imageView, int position, SpinnerConverterImageManager imageM) {
         imageView.setImageResource(imageM.getImage(position));
 
 
@@ -236,11 +225,11 @@ public class Page_Converter extends Fragment {
 
 
                     String dateUpdateCurrency = new SimpleDateFormat("dd.MM.yyyy").format(new Date(response.body().getTimestamp() * 1000L));
+                    Log.v("retrofitTEST", "" + dateUpdateCurrency);
+
                     currencyDate.setText(dateUpdateCurrency);
 
                     shPrefManager.setInfoCurrencyUpdate(RUBinUSD, RUBinEUR, RUBinGBP, dateUpdateCurrency);
-
-                    animViewUpdate.stop();
 
                     disableLoadingState();
 
@@ -250,6 +239,7 @@ public class Page_Converter extends Fragment {
             @Override
             public void onFailure(Call<DataCurrency> call, Throwable t) {
                 disableLoadingState();
+                Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
 
 
             }
@@ -300,7 +290,7 @@ public class Page_Converter extends Fragment {
     private String getDateOfUpdate(DataCurrency dataCurrency) {
         dateCustom = new DateCustomChanger(dataCurrency.getTimestamp());
 
-        String date = String.format("%s.%s.%d", dateCustom.getDay(), dateCustom.getMonth(), dateCustom.getCalendar().get(Calendar.YEAR));
+        String date = String.format("%s.%s.%d", dateCustom.getDay(), dateCustom.getMonth(MONTH_SHORT), dateCustom.getCalendar().get(Calendar.YEAR));
         return date;
 
     }

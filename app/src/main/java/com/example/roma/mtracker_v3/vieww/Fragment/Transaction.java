@@ -19,6 +19,7 @@ import com.example.roma.mtracker_v3.model.InsertDescription;
 import com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry;
 import com.example.roma.mtracker_v3.vieww.Dialog.DatePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 
@@ -62,7 +63,7 @@ public class Transaction extends Fragment {
         initValueField(view);
         initDateField(view);
 
-        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(),R.color.red));
+        getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.red));
 
 
         return view;
@@ -145,7 +146,7 @@ public class Transaction extends Fragment {
 //        DialogFragment datePicker = DatePicker.newInstance();
         DatePicker datepicker = new DatePicker();
         datepicker.setTargetFragment(this, REQUEST_DATE);
-        datepicker.show(getChildFragmentManager(),"datePicker");
+        datepicker.show(getChildFragmentManager(), "datePicker");
 
     }
 
@@ -200,10 +201,10 @@ public class Transaction extends Fragment {
     }
 
     private void bindDateField(Date date) {
-        String dateString = String.valueOf(date);
-        dateTransaction.setText(dateString);
-    }
+        SimpleDateFormat dFormat = new SimpleDateFormat("dd.MM.yyyy");
 
+        dateTransaction.setText(dFormat.format(date));
+    }
 
 
     public Date getDateForRealm() {
@@ -253,6 +254,7 @@ public class Transaction extends Fragment {
      */
     public interface IdImageOnCategoryListener {
         void displayCategoryFragment();
+
         void goToFragmentInsert();
     }
 }

@@ -12,13 +12,13 @@ import com.example.roma.mtracker_v3.model.DateCustomChanger;
 import com.example.roma.mtracker_v3.model.InsertDescription;
 import com.example.roma.mtracker_v3.model.TransactionItem;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
 import io.realm.Sort;
+
+import static com.example.roma.mtracker_v3.model.DateCustomChanger.*;
 
 /**
  * Created by Roma on 10.07.2017.
@@ -72,7 +72,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             holder.description.setText(result.get(position).getDescription());
             holder.category.setText(arrayImages.get(result.get(position).getIdImages()).getDescription());
 
-            holder.date.setText(dateCustom.getDay()+ " "+dateCustom.getMonth());
+            holder.date.setText(dateCustom.getDay()+ " "+dateCustom.getMonth(MONTH_SHORT));
         } catch (Exception e) {
 
         }

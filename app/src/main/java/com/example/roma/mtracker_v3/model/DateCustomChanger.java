@@ -1,5 +1,7 @@
 package com.example.roma.mtracker_v3.model;
 
+import android.util.Log;
+
 import java.util.Calendar;
 import java.util.Date;
 
@@ -8,9 +10,14 @@ import java.util.Date;
  */
 
 public class DateCustomChanger {
+    public static final int MONTH_SHORT = 0;
+    public static final int MONTH_FULL = 1;
+
+
     private Date date;
     Calendar mCalendar;
-    private String[] monthArray = {"Янв", "Фвр", "Мрт", "Апр", "Мая", "Июня","Июля", "Авг", "Сент", "Окт", "Нояб", "Дек"};
+    private String[] monthShortArray = {"Янв", "Фвр", "Мрт", "Апр", "Мая", "Июня", "Июля", "Авг", "Сент", "Окт", "Нояб", "Дек"};
+    private String[] monthFullArray = {"Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"};
     private String month;
     private String[] dayOfWeekArray = {"Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"};
     private String dayOfWeek;
@@ -18,7 +25,8 @@ public class DateCustomChanger {
 
 
     public DateCustomChanger() {
-
+        date = new Date();
+        mCalendar = Calendar.getInstance();
     }
 
     public DateCustomChanger(Date date) {
@@ -34,6 +42,45 @@ public class DateCustomChanger {
     }
 
 
+    public Date getThisMonthWithStartEnd(int day) {
+        Calendar calendar1 = Calendar.getInstance();
+        Date dateTemp = new Date();
+
+        calendar1.set(Calendar.DAY_OF_MONTH, day);
+
+        dateTemp.setTime(calendar1.getTimeInMillis());
+
+        return dateTemp;
+
+    }
+
+    public Date getPrevMonthWithStartEnd(int day) {
+        Calendar calendar = Calendar.getInstance();
+        Date dateTemp = new Date();
+
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        dateTemp.setTime(calendar.getTimeInMillis());
+
+
+        return dateTemp;
+    }
+
+    public void setDatePrev() {
+        Calendar calendar = Calendar.getInstance();
+        Date dateTemp = new Date();
+
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) - 1);
+        dateTemp.setTime(calendar.getTimeInMillis());
+
+        date = dateTemp;
+        mCalendar.setTime(date);
+    }
+
+    public void setDateNow() {
+        date = new Date();
+        mCalendar = Calendar.getInstance();
+    }
 
     public String getDay() {
         day = mCalendar.get(Calendar.DAY_OF_MONTH);
@@ -45,9 +92,22 @@ public class DateCustomChanger {
         return dayOfWeek;
     }
 
-    public String getMonth() {
-        month = monthArray[mCalendar.get(Calendar.MONTH)];
+    public String getMonth(int id) {
+        switch (id) {
+            case MONTH_SHORT:
+                month = monthShortArray[mCalendar.get(Calendar.MONTH)];
+                break;
+            case MONTH_FULL:
+                month = monthFullArray[mCalendar.get((Calendar.MONTH))];
+                break;
+        }
+        Log.v("DATEEMONTH", month);
         return month;
+    }
+
+    public int getYear() {
+        int year = mCalendar.get(Calendar.YEAR);
+        return year;
     }
 
 
@@ -61,7 +121,7 @@ public class DateCustomChanger {
         mCalendar.setTime(date);
     }
 
-    public Calendar getCalendar () {
+    public Calendar getCalendar() {
         return mCalendar;
     }
 }

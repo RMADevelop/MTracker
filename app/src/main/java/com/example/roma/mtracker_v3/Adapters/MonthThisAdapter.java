@@ -15,41 +15,81 @@ import com.example.roma.mtracker_v3.R;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import io.realm.Realm;
 import io.realm.RealmResults;
-import io.realm.Sort;
 
 import com.example.roma.mtracker_v3.model.DateCustomChanger;
 import com.example.roma.mtracker_v3.model.InsertDescription;
 import com.example.roma.mtracker_v3.model.Item;
 
+import static com.example.roma.mtracker_v3.model.DateCustomChanger.*;
 
 
 public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdapter.MainVH> {
 
-    private DateCustomChanger dateCustom = new DateCustomChanger();
+    private DateCustomChanger dateCustom;
 
     private InsertDescription arrayInsertDescription = new InsertDescription();
-    private ArrayList<InsertDescription> arrayImages;
 
 
     private Realm mRealm = Realm.getDefaultInstance();
-    RealmResults<Item> result = mRealm.where(Item.class).findAll().sort("mDate", Sort.DESCENDING);
+    RealmResults<Item> result;
+//            = mRealm.where(Item.class).findAll().sort("mDate", Sort.DESCENDING);
 
-    int valueDay = 0;
+    private int valueDay = 0;
     private String[] dayWeek = {"Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"};
-    private ArrayList<Integer> array = getCountItem();
+    private List<Integer> array;
 
-    public ArrayList<Integer> getArray() {
+    public List<Integer> getArray() {
         return array;
     }
 
-    int counter = getCountSection(result);
+    private int counter;
 
+    public void setArray() {
+        this.array = getCountItem();
+    }
+
+    public void setCounter() {
+        this.counter = getCountSection(result);
+
+    }
+
+    public MonthThisAdapter(RealmResults<Item> realmResults) {
+//        this.result = realmResults;
+        Log.v("REALMTEST", "initA");
+
+        result = realmResults;
+        array = getCountItem();
+        counter = getCountSection(result);
+        dateCustom = new DateCustomChanger();
+    }
+
+    public MonthThisAdapter(RealmResults<Item> realmResults, String prev) {
+//        this.result = realmResults;
+        Log.v("REALMTEST", "initA");
+
+        result = realmResults;
+        array = getCountItem();
+        counter = getCountSection(result);
+        dateCustom = new DateCustomChanger();
+        dateCustom.setDatePrev();
+    }
+
+
+
+
+    public void setResult(RealmResults<Item> result) {
+        this.result = result;
+        array = getCountItem();
+        counter = getCountSection(result);
+    }
 
 
     {
+
         try {
             dateCustom.setDate(result.get(0).getDate());
         } catch (Exception e) {
@@ -133,7 +173,6 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
     }
 
 
-
     public int getTotalHeader(int section) {
         int start = getCalendarDayItem(result.get(0));
         int size = 0;
@@ -215,10 +254,13 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
     public void onBindHeaderViewHolder(MainVH holder, int section, boolean expanded) {
 
         try {
+
             holder.valueHeader.setText(Integer.toString(getTotalHeader(section)));
             holder.dateDayHeader.setText(Integer.toString(getDayHeader(section)));
             holder.dateDayWeekHeader.setText(getDayWeekHeader(section));
-            holder.dayOfMonth.setText(dateCustom.getMonth());
+            Log.v("DATEEMONTH", dateCustom.getMonth(MONTH_SHORT));
+            holder.dayOfMonth.setText(dateCustom.getMonth(MONTH_SHORT));
+
         } catch (Exception e) {
 
         }
@@ -240,7 +282,7 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
         // See sample project for a visual of how these indices work.
 
         Item element = result.get(absolutePosition - section - 1);
-        arrayImages = arrayInsertDescription.getArrayImages();
+        ArrayList<InsertDescription> arrayImages = arrayInsertDescription.getArrayImages();
 
         if (element.getPl_mn() == 0) {
             holder.image.setImageResource(arrayImages.get(element.getIdImage()).getImageId());
@@ -252,6 +294,8 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
         if (result.get(absolutePosition - section - 1).getPl_mn() == 1) {
             holder.value.setText(Integer.toString(element.getValue()));
             holder.value.setTextColor(Color.parseColor("#4CAF50"));
+            holder.image.setImageResource(R.mipmap.ic_dollar);
+            holder.description.setText("Доход");
 
         }
 
@@ -302,7 +346,7 @@ public class MonthThisAdapter extends SectionedRecyclerViewAdapter<MonthThisAdap
             description = (TextView) itemView.findViewById(R.id.descriptionChild);
             value = (TextView) itemView.findViewById(R.id.valueChild);
 
-            dayOfMonth =(TextView) itemView.findViewById(R.id.dayOfMonth);
+            dayOfMonth = (TextView) itemView.findViewById(R.id.dayOfMonth);
             valueHeader = (TextView) itemView.findViewById(R.id.totalValueOnDay);
             dateDayHeader = (TextView) itemView.findViewById(R.id.dateText);
             dateDayWeekHeader = (TextView) itemView.findViewById(R.id.dayOfWeekText);
