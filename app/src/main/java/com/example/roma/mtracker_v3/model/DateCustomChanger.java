@@ -65,6 +65,17 @@ public class DateCustomChanger {
 
         return dateTemp;
     }
+    public Date getNextMonthWithStartAndEnd(int day) {
+        Calendar calendar = Calendar.getInstance();
+        Date dateTemp = new Date();
+
+        calendar.set(Calendar.MONTH, calendar.get(Calendar.MONTH) + 1);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        dateTemp.setTime(calendar.getTimeInMillis());
+
+
+        return dateTemp;
+    }
 
     public void setDatePrev() {
         Calendar calendar = Calendar.getInstance();
@@ -120,6 +131,10 @@ public class DateCustomChanger {
         mCalendar = Calendar.getInstance();
         mCalendar.setTime(date);
     }
+//    public Date getDateWithNextDay (Date date) {
+//        mCalendar.setTime(date);
+//
+//    }
 
     public Calendar getCalendar() {
         return mCalendar;

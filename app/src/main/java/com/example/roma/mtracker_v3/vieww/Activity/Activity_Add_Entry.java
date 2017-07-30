@@ -163,7 +163,6 @@ public class Activity_Add_Entry extends SingleFragmentClass implements Transacti
 //                    goTo();
 
 
-                ;
             }
         });
 

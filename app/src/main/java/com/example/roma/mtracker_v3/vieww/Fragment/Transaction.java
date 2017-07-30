@@ -25,8 +25,7 @@ import java.util.Date;
 
 public class Transaction extends Fragment {
 
-    public static final int REQUEST_DATE = 0;
-    public static final int REQUEST_VALUE = 1;
+    public static final int REQUEST_DATE_FROM_TRANSACTION = 0;
 
     private int idImageCategory;
     private Date date;
@@ -64,6 +63,7 @@ public class Transaction extends Fragment {
         initDateField(view);
 
         getActivity().getWindow().setStatusBarColor(ContextCompat.getColor(getContext(), R.color.red));
+
 
 
         return view;
@@ -145,7 +145,7 @@ public class Transaction extends Fragment {
     public void showDatePickerDialogAndSetTargetFr() {
 //        DialogFragment datePicker = DatePicker.newInstance();
         DatePicker datepicker = new DatePicker();
-        datepicker.setTargetFragment(this, REQUEST_DATE);
+        datepicker.setTargetFragment(this, REQUEST_DATE_FROM_TRANSACTION);
         datepicker.show(getChildFragmentManager(), "datePicker");
 
     }
@@ -193,7 +193,7 @@ public class Transaction extends Fragment {
         if (resultCode != Activity.RESULT_OK) {
             return;
         }
-        if (requestCode == REQUEST_DATE) {
+        if (requestCode == REQUEST_DATE_FROM_TRANSACTION) {
             date = (Date) data.getSerializableExtra(DatePicker.ARG_DATE);
             bindDateField(date);
 

@@ -25,7 +25,6 @@ import com.example.roma.mtracker_v3.R;
 import java.util.Date;
 
 import com.example.roma.mtracker_v3.model.Item;
-import com.example.roma.mtracker_v3.model.Singleton;
 
 import io.codetail.widget.RevealLinearLayout;
 
@@ -60,7 +59,6 @@ public class Month_this_Insert extends Fragment {
     public int pl_mn = 1;
     private TextView minus;
 
-    Singleton mSingleton;
 
     private int toolbarColors[];
     private Drawable[] arrayDrawable;
@@ -103,7 +101,6 @@ public class Month_this_Insert extends Fragment {
         View view = inflater.inflate(R.layout.fragment_in, container, false);
 
 
-        mSingleton = Singleton.get();
         initColors();
         initDrawables();
         initAllViews(view);

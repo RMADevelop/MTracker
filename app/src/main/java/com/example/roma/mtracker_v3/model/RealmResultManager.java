@@ -11,17 +11,43 @@ import io.realm.RealmResults;
 
 public class RealmResultManager {
 
-    RealmResults<Item> result;
+    RealmResults<TransactionItem> result;
     Realm realm;
     DateCustomChanger dateCustom;
+    TransactionItem transaction;
+    int i = 0;
 
     public RealmResultManager(Realm realm) {
         dateCustom = new DateCustomChanger(new Date());
         this.realm = realm;
     }
-    public RealmResults<Item> getResultMonthThis() {
-        result = realm.where(Item.class).greaterThanOrEqualTo("mDate", dateCustom.getThisMonthWithStartEnd(31)).findAll();
-        return result;
+
+    public void setResultForManager(RealmResults<TransactionItem> result) {
+        if (result != null)
+            this.result = result;
+    }
+
+    public void refreshStatusResults() {
+        if (result != null) {
+            for (i = 0; i < result.size(); i++) {
+                if (result.get(i).getDate().getTime() + 10000000 < dateCustom.getDate().getTime() && !result.get(i).isCompleteStatus() ) {
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            result.get(i).setFailedStatus(true);
+                        }
+                    });
+                } else {
+                    realm.executeTransaction(new Realm.Transaction() {
+                        @Override
+                        public void execute(Realm realm) {
+                            result.get(i).setFailedStatus(false);
+                        }
+                    });
+                }
+            }
+        }
+        i = 0;
     }
 
 

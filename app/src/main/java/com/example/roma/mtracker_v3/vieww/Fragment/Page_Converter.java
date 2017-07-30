@@ -304,7 +304,6 @@ public class Page_Converter extends Fragment {
                 listener.valueFieldClickListener();
             }
         });
-
         valueOut = (TextView) view.findViewById(R.id.value_out_converter);
 
     }

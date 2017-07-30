@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -25,7 +23,6 @@ import com.example.roma.mtracker_v3.vieww.Fragment.Page_Converter;
 
 import io.realm.Realm;
 
-import static android.R.attr.fragment;
 import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.FRAGMENT_ADD_CONVERTER;
 import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.FRAGMENT_ADD_TRANSACTION;
 import static com.example.roma.mtracker_v3.vieww.Activity.Activity_Add_Entry.FRAGMENT_ADD_VALUE;
@@ -69,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements Page_Converter.On
         viewPager.setCurrentItem(0);
     }
 
-    private void showArchive() {
+    private void showThisMonth() {
         viewPager.setCurrentItem(1);
     }
 
@@ -85,17 +82,30 @@ public class MainActivity extends AppCompatActivity implements Page_Converter.On
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 drawerLayout.closeDrawers();
                 switch (item.getItemId()) {
-                    case R.id.this_month:
+                    case R.id.add_element:
+                        IntentToAdd(FRAGMENT_ADD_VALUE);
+                        break;
+                    case R.id.add_transaction:
+                        IntentToAdd(FRAGMENT_ADD_TRANSACTION);
+                        break;
+                    case R.id.transaction:
                         showNotificationTab();
                         break;
-                    case R.id.archive:
-                        showArchive();
+                    case R.id.thisMonth:
+                        showThisMonth();
+                        break;
+                    case R.id.converter:
+                        showConverter();
                         break;
                 }
 
                 return true;
             }
         });
+    }
+
+    private void showConverter() {
+        viewPager.setCurrentItem(2);
     }
 
     private void initToolbar() {
@@ -158,12 +168,10 @@ public class MainActivity extends AppCompatActivity implements Page_Converter.On
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
             String value = data.getStringExtra("value");
-            View view =  viewPager.findViewWithTag("tagView");
+            View view = viewPager.findViewWithTag("tagView");
             TextView textView = (TextView) view.findViewById(R.id.value_in_converter);
-
             textView.setText(value);
         }
 

@@ -26,8 +26,6 @@
                                 android:id="@+id/first_element_month_this"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_marginBottom="8dp"
-                                android:layout_marginTop="8dp"
                                 android:orientation="vertical"
                                 android:paddingLeft="16dp"
                                 android:paddingRight="16dp">
@@ -40,9 +38,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Платежи в "/>
+                            android:text="Платежи в "
+                            android:textSize="16sp"/>
 
                         <Spinner
+                            android:id="@+id/spinner_transaction"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:entries="@array/spinner_transaction"
@@ -50,11 +50,29 @@
                         </Spinner>
                     </LinearLayout>
 
+                    <CheckBox
+                        android:id="@+id/complete_transaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/linear_header_transaction"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginTop="10dp"
+                        android:text="Оплаченные"/>
+
+                    <CheckBox
+                        android:id="@+id/failed_transaction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignTop="@id/complete_transaction"
+                        android:layout_toRightOf="@id/complete_transaction"
+                        android:text="Просроченные"/>
+
                     <TextView
+
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:layout_below="@id/linear_header_transaction"
-                        android:layout_marginTop="10dp"
+                        android:layout_below="@id/complete_transaction"
                         android:background="@color/white"
                         />
 
@@ -62,16 +80,36 @@
                         android:id="@+id/label_value"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/linear_header_transaction"
+                        android:layout_below="@id/complete_transaction"
                         android:layout_marginTop="20dp"
                         android:text="Запланировано "
+                        android:textSize="20sp"
                         />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignBaseline="@id/label_value"
+                        android:layout_below="@id/label_value"
+                        android:layout_marginTop="5dp"
+                        android:text="Осталось"/>
+
+
+                    <TextView
+                        android:id="@+id/future_transaction_value"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBaseline="@+id/label_value"
+                        android:layout_alignBottom="@+id/label_value"
                         android:layout_alignParentEnd="true"
+                        android:text="value"/>
+
+                    <TextView
+                        android:id="@+id/future_transaction_value_lost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@id/future_transaction_value"
+                        android:layout_below="@id/future_transaction_value"
+                        android:layout_marginTop="5dp"
                         android:text="value"/>
 
 
@@ -88,6 +126,7 @@
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <android.support.v7.widget.RecyclerView
+                android:layoutAnimation="@anim/recycle_item_animation"
                 android:id="@+id/recycler_transaction"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">

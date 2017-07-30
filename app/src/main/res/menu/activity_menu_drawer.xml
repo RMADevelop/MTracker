@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <group android:checkableBehavior="single">
-        <item
-            android:id="@+id/add_element"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Add element"/>
-        <item
-            android:id="@+id/this_month"
-            android:icon="@mipmap/ic_calendar_blank"
-            android:title="This month"/>
-        <item
-            android:id="@+id/archive"
-            android:icon="@mipmap/ic_calendar_multiple"
-            android:title="Archive"/>
-        <item
-            android:id="@+id/settings"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Settings"/>
-    </group>
-
-    <item android:title="Tools">
+    <item android:title="Добавить запись">
         <menu>
             <item
-                android:id="@+id/converter"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Converter"/>
+                android:id="@+id/add_element"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Расходы/Доходы"
+                />
+            <item
+                android:id="@+id/add_transaction"
+                android:icon="@drawable/ic_menu_camera"
+                android:title="Запланированный платеж"
+                />
         </menu>
     </item>
+    <item android:title="Открыть">
+        <menu>
+            <item
+                android:id="@+id/transaction"
+                android:icon="@mipmap/ic_calendar_blank"
+                android:title="Платежи"/>
+            <item
+                android:id="@+id/thisMonth"
+                android:icon="@mipmap/ic_calendar_multiple"
+                android:title="Расходы/Доходы"/>
+            <item
+                android:id="@+id/converter"
+                android:icon="@drawable/ic_menu_manage"
+                android:title="Конвертер валют"/>
+        </menu>
+    </item>
+
 
 </menu>

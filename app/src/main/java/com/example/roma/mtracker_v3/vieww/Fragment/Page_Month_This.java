@@ -8,6 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +36,8 @@ public class Page_Month_This extends Fragment {
     private TextView totalValue;
     private TextView monthHeader;
 
+    private int anim1 = R.anim.recycle_item_animation;
+
     private RecyclerView mRecyclerView;
     private ArrayList<Item> items;
 
@@ -57,7 +61,7 @@ public class Page_Month_This extends Fragment {
         View view = inflater.inflate(R.layout.fragment_month_this, container, false);
         mRealm = Realm.getDefaultInstance();
 
-initHeader(view);
+        initHeader(view);
         initRecyclerView(view);
         initSpinner(view);
 //        Log.v("REALMTEST","initS" + realmResult.size() );
@@ -65,11 +69,19 @@ initHeader(view);
         adapter = new MonthThisAdapter(realmResult);
 //        adapter.setResult(realmResult);
 
+        runAnimRecycler(anim1);
 
         mRecyclerView.setAdapter(adapter);
 
 
         return view;
+    }
+
+    private void runAnimRecycler(int anim) {
+        LayoutAnimationController controller = AnimationUtils.loadLayoutAnimation(getActivity(), anim);
+        mRecyclerView.setLayoutAnimation(controller);
+//        mRecyclerView.getAdapter().notifyDataSetChanged();
+        mRecyclerView.scheduleLayoutAnimation();
     }
 
     @Override
@@ -106,7 +118,7 @@ initHeader(view);
 
 
                 mRecyclerView.setAdapter(adapter);
-
+                mRecyclerView.scheduleLayoutAnimation();
 
             }
 
@@ -134,6 +146,11 @@ initHeader(view);
         monthHeader.setText(dateHeader);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        mRecyclerView.scheduleLayoutAnimation();
+    }
 
     private void initRecyclerView(View view) {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_month_this);

@@ -14,10 +14,34 @@ public class TransactionItem extends RealmObject {
     private int pl_mn;
     private Date date;
     private int idImages;
+    private boolean completeStatus =false;
+    private boolean failedStatus = false;
+
+    private int statusTransaction;
 
     public TransactionItem() {
 
     }
+
+    public boolean isCompleteStatus() {
+        return completeStatus;
+    }
+
+    public void setCompleteStatus(boolean completeStatus) {
+        this.completeStatus = completeStatus;
+        if (completeStatus) {
+            setFailedStatus(false);
+        }
+    }
+
+    public boolean isFailedStatus() {
+        return failedStatus;
+    }
+
+    public void setFailedStatus(boolean failedStatus) {
+        this.failedStatus = failedStatus;
+    }
+
 
     public int getValue() {
         return value;

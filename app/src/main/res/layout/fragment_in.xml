@@ -21,7 +21,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/primary"
-                android:paddingTop="@dimen/appbar_padding_top"
                 android:theme="@style/AppTheme.AppBarOverlay">
 
                 <android.support.v7.widget.Toolbar
@@ -29,7 +28,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     app:layout_scrollFlags="scroll|enterAlways"
-                    app:popupTheme="@style/AppTheme.PopupOverlay">
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    android:elevation="4dp">
 
                 </android.support.v7.widget.Toolbar>
 
